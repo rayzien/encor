@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encor Automation</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="logo">
+                <h2>Encor</h2>
+            </div>
+            <ul class="nav-links">
+                <li class="active"><a href="#">Dashboard</a></li>
+                <li><a href="#">Tasks</a></li>
+                <li><a href="#">Accounts</a></li>
+                <li><a href="#">Settings</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="content">
+            <header class="top-header">
+                <h1>Dashboard</h1>
+                <div class="user-profile">
+                    <div class="avatar"></div>
+                </div>
+            </header>
+
+            <div class="dashboard-grid">
+                <!-- Status Card -->
+                <div class="card status-card">
+                    <h3>System Status</h3>
+                    <div class="status-indicator">
+                        <span class="dot online"></span>
+                        <span id="backend-status">Backend Online</span>
+                    </div>
+                </div>
+
+                <!-- Quick Actions Card -->
+                <div class="card actions-card">
+                    <h3>Quick Actions</h3>
+                    <button class="btn btn-primary" onclick="startAutomation()">Start Automation</button>
+                    <button class="btn btn-secondary">Stop All</button>
+                </div>
+            </div>
+            
+            <div class="card logs-card">
+                <h3>Recent Logs</h3>
+                <div class="logs-container" id="logs-container">
+                    <p class="log-entry">Waiting for events...</p>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="/static/app.js"></script>
+</body>
+</html>
