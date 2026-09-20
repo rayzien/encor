@@ -78,8 +78,49 @@ class GlobalSetting(Base):
     key = Column(String, unique=True, index=True)
     value = Column(Text)
 
+class EngagementRule(Base):
+    """Model for engagement action parameters and spintax rules."""
+    __tablename__ = "engagement_rules"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, default="default_rules")
+    account_id = Column(Integer, ForeignKey("accounts.id"), nullable=True)
+    
+    # Liking rules
+    do_like_enabled = Column(Boolean, default=True)
+    do_like_percentage = Column(Integer, default=100)
+    delimit_liking_min = Column(Integer, default=5)
+    delimit_liking_max = Column(Integer, default=10000)
+
+    # Commenting rules
+    do_comment_enabled = Column(Boolean, default=False)
+    do_comment_percentage = Column(Integer, default=100)
+    delimit_commenting_min = Column(Integer, default=0)
+    delimit_commenting_max = Column(Integer, default=500)
+    comments_spintax_json = Column(Text, default='["{Awesome|Great|Love this} {pic|shot|photo}!"]')
+    
+    # Comment likes rules
+    do_comment_likes_enabled = Column(Boolean, default=False)
+    do_comment_likes_percentage = Column(Integer, default=50)
+    comment_likes_max = Column(Integer, default=3)
+
+    # Following rules
+    do_follow_enabled = Column(Boolean, default=True)
+    do_follow_percentage = Column(Integer, default=100)
+
+    # User interaction rules
+    user_interact_amount = Column(Integer, default=3)
+    user_interact_percentage = Column(Integer, default=100)
+    user_interact_randomize = Column(Boolean, default=True)
+    user_interact_media = Column(String, default="Photo")  # Photo, Video, Any
+
+    # Story viewing rules
+    do_story_enabled = Column(Boolean, default=True)
+    do_story_percentage = Column(Integer, default=100)
+
 # Create tables
 Base.metadata.create_all(bind=engine)
+
 
 def get_db():
     """Dependency for FastAPI endpoints."""

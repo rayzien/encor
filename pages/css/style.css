@@ -835,9 +835,27 @@ nav {
 .text-amber { color: var(--accent); }
 .text-red   { color: var(--red); }
 
+/* Spintax Tester */
+.spintax-tester-box {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.spintax-test-actions {
+    display: flex;
+    gap: 1rem;
+}
+
 /* RESPONSIVE */
 @media (max-width: 768px) {
     .dashboard-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
     .form-row { grid-template-columns: 1fr; }
 }
+
 
