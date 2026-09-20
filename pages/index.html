@@ -12,11 +12,7 @@
     
     <!-- FontAwesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- GSAP for Antigravity Animations -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
@@ -24,16 +20,16 @@
 
     <!-- Navigation -->
     <nav id="navbar">
-        <div class="logo font-display" style="font-size: 1.5rem; letter-spacing: 0.1em; display: flex; align-items: center; gap: 8px;">
+        <div class="font-display" style="font-size: 1.5rem; letter-spacing: 0.1em; display: flex; align-items: center; gap: 8px;">
             <i class="fa-solid fa-mountain-sun" style="color: var(--accent);"></i>
             ENCOR
         </div>
         
         <!-- Desktop Links -->
-        <ul class="nav-links font-body font-bold">
+        <ul class="nav-links font-body">
             <li><a href="#dashboard">Dashboard</a></li>
             <li><a href="#tasks">Tasks</a></li>
-            <li><a href="#settings">Settings</a></li>
+            <li><a href="#gallery">Gallery</a></li>
         </ul>
 
         <!-- Burger Icon -->
@@ -49,54 +45,122 @@
         <ul>
             <li><a href="#dashboard" class="mobile-link">Dashboard</a></li>
             <li><a href="#tasks" class="mobile-link">Tasks</a></li>
-            <li><a href="#settings" class="mobile-link">Settings</a></li>
+            <li><a href="#gallery" class="mobile-link">Gallery</a></li>
         </ul>
     </div>
 
-    <!-- Parallax Background Layers (Firewatch Theme) -->
-    <div class="parallax-container" id="scroll-container">
-        <!-- Parallax Hero -->
-        <header class="parallax-section" style="position: relative; height: 100vh; display: flex; align-items: center; justify-content: center; transform-style: preserve-3d; z-index: -1;">
-            <div class="layer layer-bg"></div>
-            <div class="layer layer-sun"></div>
-            <div class="layer layer-mountain-3"></div>
-            <div class="layer layer-mountain-2"></div>
-            <div class="layer layer-mountain-1"></div>
+    <!-- The parallax wrapper with CSS perspective (from reference) -->
+    <main class="parallax-wrapper" id="scroll-container">
+        
+        <!-- Hero Section with Parallax Layers -->
+        <header class="parallax-section">
+            <!-- Background Sky/Sun Layer (moves slowest) -->
+            <div class="parallax-layer layer-bg"></div>
             
-            <div style="text-align: center; z-index: 10; transform: translateZ(-5px) scale(1.5);">
-                <span class="font-script" style="font-size: 3rem; color: #fde68a; display: block; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); transform: rotate(-5deg) translateY(20px);">the story of</span>
-                <h1 class="font-display" style="font-size: 8rem; line-height: 1; color: white; text-shadow: 0 10px 20px rgba(0,0,0,0.8); letter-spacing: 0.1em;">ENCOR</h1>
+            <!-- Midground Mountains Layer -->
+            <div class="parallax-layer layer-mountains"></div>
+            
+            <!-- Framing overlay -->
+            <div class="framing-overlay"></div>
+
+            <!-- Title Content -->
+            <div class="hero-title-container">
+                <span class="hero-script font-script">the story of</span>
+                <h1 class="hero-main-title font-display">ENCOR</h1>
             </div>
 
-            <div class="layer layer-foreground"></div>
+            <!-- Foreground Silhouettes -->
+            <div class="parallax-layer layer-foreground"></div>
         </header>
 
-        <!-- Main Content -->
-        <main class="content" id="dashboard" style="background: var(--primary-bg); position: relative; z-index: 10; padding-top: 100px;">
-            <header class="dashboard-header gs-reveal" style="text-align: center; margin-bottom: 50px;">
-                <h2 class="font-display text-4xl mb-4" style="color: var(--accent); font-size: 2.5rem; margin-bottom: 1rem;">The Automation Journey</h2>
-                <p class="font-script text-2xl" style="color: #9ca3af; font-size: 1.5rem;">Where will your tasks take you?</p>
-            </header>
-            
-            <section class="dashboard-grid">
-                <!-- Task Runner Card -->
-                <article class="glass-panel gs-reveal">
-                    <i class="fa-solid fa-rocket" style="font-size: 2rem; color: var(--accent); margin-bottom: 1rem; display: block;"></i>
-                    <h3 class="font-display" style="font-size: 1.5rem; margin-bottom: 0.5rem;">Launch Task</h3>
-                    <p class="font-body" style="color: #9ca3af; margin-bottom: 1rem; line-height: 1.6;">Venture into the unknown. Start a new automation run across your accounts and navigate through the data.</p>
-                    <button class="btn btn-primary" onclick="launchTask()">Execute</button>
-                </article>
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="content-section">
+            <div style="max-width: 900px; margin: 0 auto;">
+                <div style="text-align: center; margin-bottom: 4rem;" class="reveal">
+                    <h2 class="font-display" style="font-size: 2.5rem; color: var(--accent); margin-bottom: 1rem;">The Automation Journey</h2>
+                    <p class="font-script" style="font-size: 1.5rem; color: #9ca3af;">Where will your tasks take you?</p>
+                </div>
                 
-                <!-- Accounts Card -->
-                <article class="glass-panel gs-reveal" style="transition-delay: 0.2s;">
-                    <i class="fa-solid fa-users" style="font-size: 2rem; color: var(--accent); margin-bottom: 1rem; display: block;"></i>
-                    <h3 class="font-display" style="font-size: 1.5rem; margin-bottom: 0.5rem;">Manage Accounts</h3>
-                    <p class="font-body" style="color: #9ca3af; margin-bottom: 1rem; line-height: 1.6;">The compass is your best friend. View and manage your connected automation targets seamlessly.</p>
-                    <button class="btn btn-secondary">View Accounts</button>
-                </article>
-            </section>
-        </main>
-    </div>
+                <div class="grid grid-cols-2 gap-10">
+                    <div class="card reveal">
+                        <i class="fa-solid fa-rocket" style="font-size: 2rem; color: var(--accent); margin-bottom: 1rem; display: block;"></i>
+                        <h3 class="font-display" style="font-size: 1.5rem; margin-bottom: 0.75rem;">Launch Task</h3>
+                        <p style="color: #9ca3af; line-height: 1.6; margin-bottom: 1.5rem;">
+                            Venture into the unknown. Start a new automation run across your accounts and navigate through the data.
+                        </p>
+                        <button class="btn btn-primary" onclick="launchTask()">Execute</button>
+                    </div>
+                    <div class="card reveal" style="transition-delay: 0.2s;">
+                        <i class="fa-solid fa-compass" style="font-size: 2rem; color: var(--accent); margin-bottom: 1rem; display: block;"></i>
+                        <h3 class="font-display" style="font-size: 1.5rem; margin-bottom: 0.75rem;">Manage Accounts</h3>
+                        <p style="color: #9ca3af; line-height: 1.6; margin-bottom: 1.5rem;">
+                            The compass is your best friend. View and manage your connected automation targets seamlessly.
+                        </p>
+                        <button class="btn btn-secondary">View Accounts</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tasks Section -->
+        <section id="tasks" class="content-section" style="background: #18181b; border-top: 1px solid #27272a;">
+            <div style="max-width: 900px; margin: 0 auto;">
+                <h2 class="font-display reveal" style="font-size: 2.5rem; text-align: center; margin-bottom: 3rem;">Active Tasks</h2>
+                
+                <div class="grid grid-cols-3 gap-6">
+                    <div class="card reveal">
+                        <i class="fa-solid fa-chart-line" style="font-size: 2rem; color: var(--accent); margin-bottom: 1rem; display: block;"></i>
+                        <h3 class="font-display" style="font-size: 1.2rem; margin-bottom: 0.5rem;">Analytics</h3>
+                        <p style="color: #9ca3af; line-height: 1.6;">Track performance and engagement metrics in real-time.</p>
+                    </div>
+                    <div class="card reveal" style="transition-delay: 0.2s;">
+                        <i class="fa-solid fa-users" style="font-size: 2rem; color: var(--accent); margin-bottom: 1rem; display: block;"></i>
+                        <h3 class="font-display" style="font-size: 1.2rem; margin-bottom: 0.5rem;">Engagement</h3>
+                        <p style="color: #9ca3af; line-height: 1.6;">Automate interactions with precision and consistency.</p>
+                    </div>
+                    <div class="card reveal" style="transition-delay: 0.4s;">
+                        <i class="fa-solid fa-shield-halved" style="font-size: 2rem; color: var(--accent); margin-bottom: 1rem; display: block;"></i>
+                        <h3 class="font-display" style="font-size: 1.2rem; margin-bottom: 0.5rem;">Safety</h3>
+                        <p style="color: #9ca3af; line-height: 1.6;">Built-in rate limiting and human-like behavior patterns.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section id="gallery" class="content-section" style="border-top: 1px solid #27272a;">
+            <div style="max-width: 1100px; margin: 0 auto;">
+                <h2 class="font-display reveal" style="font-size: 2.5rem; text-align: center; margin-bottom: 3rem;">Visual Evidence</h2>
+                
+                <div class="grid grid-cols-3 gap-6">
+                    <div class="gallery-item reveal">
+                        <img src="https://placehold.co/600x400/d97706/ffffff?text=Dashboard" alt="Dashboard">
+                        <div class="gallery-overlay">
+                            <span class="font-script" style="font-size: 1.5rem;">Dashboard View</span>
+                        </div>
+                    </div>
+                    <div class="gallery-item reveal" style="transition-delay: 0.2s;">
+                        <img src="https://placehold.co/600x400/18181b/ffffff?text=Analytics" alt="Analytics">
+                        <div class="gallery-overlay">
+                            <span class="font-script" style="font-size: 1.5rem;">Real-time Data</span>
+                        </div>
+                    </div>
+                    <div class="gallery-item reveal" style="transition-delay: 0.4s;">
+                        <img src="https://placehold.co/600x400/522b13/ffffff?text=Automation" alt="Automation">
+                        <div class="gallery-overlay">
+                            <span class="font-script" style="font-size: 1.5rem;">Task Engine</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p class="font-body">&copy; 2026 Encor Project by Rayzien. All rights reserved.</p>
+        </footer>
+
+    </main>
 
     <!-- Custom JS -->
     <script src="/static/js/app.js"></script>

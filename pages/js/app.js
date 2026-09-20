@@ -1,104 +1,12 @@
-// GSAP Antigravity & Parallax Logic
+// Encor App JS — Matches reference parallax_adventure_website.html logic
 
 document.addEventListener('DOMContentLoaded', () => {
-    initGSAP();
-    checkHealth();
-});
 
-function initGSAP() {
-    gsap.registerPlugin(ScrollTrigger);
-
-    // 1. Parallax Scroll Effect
-    // Move the sun down slightly as we scroll
-    gsap.to('.layer-sun', {
-        yPercent: 30,
-        ease: 'none',
-        scrollTrigger: {
-            trigger: 'body',
-            start: 'top top',
-            end: 'bottom top',
-            scrub: true
-        }
-    });
-
-    // Move mountains at different speeds (depth illusion)
-    gsap.to('.layer-mountain-3', {
-        yPercent: 15,
-        ease: 'none',
-        scrollTrigger: { trigger: 'body', start: 'top top', end: 'bottom top', scrub: true }
-    });
-    
-    gsap.to('.layer-mountain-2', {
-        yPercent: 10,
-        ease: 'none',
-        scrollTrigger: { trigger: 'body', start: 'top top', end: 'bottom top', scrub: true }
-    });
-
-    gsap.to('.layer-mountain-1', {
-        yPercent: 5,
-        ease: 'none',
-        scrollTrigger: { trigger: 'body', start: 'top top', end: 'bottom top', scrub: true }
-    });
-    
-    // Foreground stays mostly static, or moves slightly negative
-    gsap.to('.layer-foreground', {
-        yPercent: 0,
-        ease: 'none',
-        scrollTrigger: { trigger: 'body', start: 'top top', end: 'bottom top', scrub: true }
-    });
-
-
-    // 2. Antigravity Staggered Entrance Animations
-    
-    // Sidebar slides in from left
-    gsap.from('.sidebar', {
-        x: -50,
-        opacity: 0,
-        duration: 1,
-        ease: 'power3.out',
-        delay: 0.2
-    });
-
-    // Header drops in
-    gsap.from('.top-header', {
-        y: -30,
-        opacity: 0,
-        duration: 1,
-        ease: 'power3.out',
-        delay: 0.4
-    });
-
-    // Dashboard cards stagger in from bottom with slight 3D rotation
-    gsap.from('.gs-card', {
-        y: 50,
-        rotationX: 15, // Slight 3D tilt
-        opacity: 0,
-        duration: 1.2,
-        stagger: 0.15, // Domino effect
-        ease: 'power4.out',
-        delay: 0.6,
-        transformPerspective: 800
-    });
-    
-    // Animate panels cascading in
-    gsap.from('.glass-panel', {
-        y: 50,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.2,
-        ease: 'power3.out',
-        delay: 0.5,
-        rotationX: 15,
-        transformPerspective: 800
-    });
-}
-
-// -----------------------------------------
-// Navigation & Burger Menu Logic
-// -----------------------------------------
-
-document.addEventListener('DOMContentLoaded', () => {
+    // -----------------------------------------------
     // 1. Navbar Scroll Effect
+    // We listen on the parallax-wrapper, NOT window,
+    // because that's where the scroll actually happens.
+    // -----------------------------------------------
     const scrollContainer = document.getElementById('scroll-container');
     const navbar = document.getElementById('navbar');
 
@@ -109,10 +17,15 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 navbar.classList.remove('scrolled');
             }
+
+            // Trigger reveal animations on scroll
+            reveal();
         });
     }
 
+    // -----------------------------------------------
     // 2. Burger Menu Logic
+    // -----------------------------------------------
     const burger = document.getElementById('burger');
     const mobileMenu = document.getElementById('mobile-menu');
     const mobileLinks = document.querySelectorAll('.mobile-link');
@@ -120,15 +33,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function toggleMenu() {
         isMenuOpen = !isMenuOpen;
-        if(burger) burger.classList.toggle('toggle');
-        if(mobileMenu) mobileMenu.classList.toggle('active');
-        
-        if(scrollContainer) {
-            if(isMenuOpen) {
-                scrollContainer.style.overflowY = 'hidden';
-            } else {
-                scrollContainer.style.overflowY = 'auto';
-            }
+        burger.classList.toggle('toggle');
+        mobileMenu.classList.toggle('active');
+
+        if (scrollContainer) {
+            scrollContainer.style.overflowY = isMenuOpen ? 'hidden' : 'auto';
         }
     }
 
@@ -136,39 +45,89 @@ document.addEventListener('DOMContentLoaded', () => {
         burger.addEventListener('click', toggleMenu);
     }
 
+    // Close mobile menu when a link is clicked
     mobileLinks.forEach(link => {
         link.addEventListener('click', (e) => {
+            e.preventDefault();
             toggleMenu();
+
+            const targetId = link.getAttribute('href').substring(1);
+            const targetSection = document.getElementById(targetId);
+
+            if (targetSection) {
+                setTimeout(() => {
+                    targetSection.scrollIntoView({ behavior: 'smooth' });
+                }, 400);
+            }
         });
     });
+
+    // Handle Desktop Links smooth scroll
+    const desktopLinks = document.querySelectorAll('.nav-links a');
+    desktopLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute('href').substring(1);
+            const targetSection = document.getElementById(targetId);
+            if (targetSection) {
+                targetSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    });
+
+    // -----------------------------------------------
+    // 3. Scroll Reveal Animation
+    // -----------------------------------------------
+    function reveal() {
+        const reveals = document.querySelectorAll('.reveal');
+        const windowHeight = window.innerHeight;
+
+        reveals.forEach(el => {
+            const elementTop = el.getBoundingClientRect().top;
+            const revealPoint = 100;
+
+            if (elementTop < windowHeight - revealPoint) {
+                el.classList.add('active');
+            }
+        });
+    }
+
+    // Trigger once on load
+    reveal();
+
+    // -----------------------------------------------
+    // 4. Backend Health Check
+    // -----------------------------------------------
+    checkHealth();
 });
 
 
-// Backend Logic
+// -----------------------------------------------
+// Backend API Functions
+// -----------------------------------------------
 async function checkHealth() {
     try {
         const response = await fetch('/api/health');
         const data = await response.json();
-        
         if (data.status === 'ok') {
-            console.log('System check: ' + data.message);
+            console.log('✅ Encor Backend Online: ' + data.message);
         } else {
-            console.warn('Backend Issue detected.');
+            console.warn('⚠️ Backend Issue detected.');
         }
     } catch (error) {
-        console.error('Connection error: Could not reach backend.');
+        console.error('❌ Connection error: Could not reach backend.');
     }
 }
 
 async function launchTask() {
-    console.log('Initiating Playwright automation sequence...');
+    console.log('🚀 Initiating Playwright automation sequence...');
     try {
         const response = await fetch('/api/automation/start', { method: 'POST' });
         const data = await response.json();
         if (data.status === 'ok') {
-            alert('Automation task queued successfully! Task ID: ' + data.task_id);
+            alert('✅ Automation task queued successfully! Task ID: ' + data.task_id);
         }
     } catch (error) {
-        alert('Failed to start automation task.');
+        alert('❌ Failed to start automation task.');
     }
 }

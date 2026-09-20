@@ -1,15 +1,8 @@
-// GSAP Antigravity Login Logic
+// Encor Login JS — GSAP animations + API auth
 
 document.addEventListener('DOMContentLoaded', () => {
-    initGSAP();
-    
-    const form = document.getElementById('login-form');
-    form.addEventListener('submit', handleLogin);
-});
-
-function initGSAP() {
-    // Smoothly drop in the login card
-    gsap.from('.login-card', {
+    // Animate login card entrance
+    gsap.from('#login-card', {
         y: -50,
         opacity: 0,
         duration: 1.2,
@@ -19,15 +12,20 @@ function initGSAP() {
         transformPerspective: 800
     });
 
-    // Pop in the login button
-    gsap.from('.gs-btn', {
-        scale: 0.8,
-        opacity: 0,
-        duration: 0.8,
-        ease: 'back.out(1.7)',
-        delay: 0.8
-    });
-}
+    // Burger menu
+    const burger = document.getElementById('burger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (burger && mobileMenu) {
+        burger.addEventListener('click', () => {
+            burger.classList.toggle('toggle');
+            mobileMenu.classList.toggle('active');
+        });
+    }
+
+    // Login form
+    const form = document.getElementById('login-form');
+    form.addEventListener('submit', handleLogin);
+});
 
 async function handleLogin(e) {
     e.preventDefault();
@@ -41,34 +39,28 @@ async function handleLogin(e) {
     try {
         const response = await fetch('/api/auth/login', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, password })
         });
         
         const data = await response.json();
         
         if (response.ok && data.status === 'success') {
-            // Animate card away on success
-            gsap.to('.login-card', {
+            gsap.to('#login-card', {
                 y: 50,
                 opacity: 0,
                 duration: 0.6,
                 ease: 'power3.in',
-                onComplete: () => {
-                    // Redirect to dashboard
-                    window.location.href = '/';
-                }
+                onComplete: () => { window.location.href = '/'; }
             });
         } else {
-            // Shake animation on error
             errorMsg.textContent = data.detail || 'Login failed';
             errorMsg.style.display = 'block';
             
-            gsap.fromTo('.login-card', 
+            gsap.fromTo('#login-card', 
                 { x: -10 }, 
-                { x: 10, duration: 0.1, yoyo: true, repeat: 5, ease: 'none', onComplete: () => gsap.set('.login-card', {x: 0})}
+                { x: 10, duration: 0.1, yoyo: true, repeat: 5, ease: 'none',
+                  onComplete: () => gsap.set('#login-card', { x: 0 }) }
             );
         }
     } catch (error) {
