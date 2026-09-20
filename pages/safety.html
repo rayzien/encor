@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encor - Smart Filtering & Safety Guardrails</title>
+    
+    <!-- Google Fonts (8 Fonts) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;1,600&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@500;600&family=Poppins:wght@400;600&family=Sora:wght@400;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+    <!-- Transition Overlay -->
+    <div id="page-overlay" class="page-overlay"></div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-brand font-heading">
+                ENCOR<span class="brand-accent">.</span>
+            </a>
+            
+            <div class="nav-menu" id="nav-menu">
+                <a href="/" class="nav-link font-accent">Home</a>
+                <a href="/accounts" class="nav-link font-accent">Accounts</a>
+                <a href="/tasks" class="nav-link font-accent">Tasks</a>
+                <a href="/engagement" class="nav-link font-accent">Engagement</a>
+                <a href="/safety" class="nav-link active font-accent">Safety</a>
+                <a href="/settings" class="nav-link font-accent">Settings</a>
+                <a href="/login" class="nav-link font-accent nav-login-btn">Sign In</a>
+            </div>
+
+            <button class="burger-btn" id="burger-btn" aria-label="Toggle navigation">
+                <span class="burger-bar"></span>
+                <span class="burger-bar"></span>
+                <span class="burger-bar"></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main class="dashboard-container">
+        
+        <!-- Header Section -->
+        <header class="dashboard-header reveal-item">
+            <div class="header-titles">
+                <h1 class="font-heading page-title">Smart Filtering & Safety Guardrails</h1>
+                <p class="font-body text-muted">Protect your account health with potency ratio filters, skip criteria, keyword blacklists, and character-set checks.</p>
+            </div>
+        </header>
+
+        <!-- Settings Form Section -->
+        <section class="reveal-item section-margin">
+            <div class="settings-card card-glow">
+                <form id="safety-rules-form">
+                    
+                    <!-- 1. Relationship Bounds & Potency Ratio -->
+                    <div class="setting-group">
+                        <h3 class="font-heading setting-title">1. Relationship Bounds & Potency Ratio (set_relationship_bounds)</h3>
+                        <div class="setting-item">
+                            <div>
+                                <h4 class="font-heading">Enable Relationship Bounds</h4>
+                                <p class="font-body text-muted">Enforce minimum/maximum metrics and follower-to-following ratios.</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="safety-rel-enabled" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="font-accent">Min Followers</label>
+                                <input type="number" id="safety-min-followers" class="form-input font-mono" value="30">
+                            </div>
+                            <div class="form-group">
+                                <label class="font-accent">Max Followers</label>
+                                <input type="number" id="safety-max-followers" class="form-input font-mono" value="50000">
+                            </div>
+                            <div class="form-group">
+                                <label class="font-accent">Min Following</label>
+                                <input type="number" id="safety-min-following" class="form-input font-mono" value="20">
+                            </div>
+                            <div class="form-group">
+                                <label class="font-accent">Max Following</label>
+                                <input type="number" id="safety-max-following" class="form-input font-mono" value="7500">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="font-accent">Min Posts Count</label>
+                                <input type="number" id="safety-min-posts" class="form-input font-mono" value="5">
+                            </div>
+                            <div class="form-group">
+                                <label class="font-accent">Max Posts Count</label>
+                                <input type="number" id="safety-max-posts" class="form-input font-mono" value="10000">
+                            </div>
+                            <div class="form-group">
+                                <label class="font-accent">Potency Ratio (Followers / Following, e.g. 1.5)</label>
+                                <input type="number" step="0.1" id="safety-potency-ratio" class="form-input font-mono" value="0.0">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. Skip Users Attributes & Verified -->
+                    <div class="setting-group">
+                        <h3 class="font-heading setting-title">2. Profile Attribute Skips (set_skip_users & set_skip_verified)</h3>
+                        
+                        <div class="setting-item">
+                            <div>
+                                <h4 class="font-heading">Skip Private Accounts (skip_private)</h4>
+                                <p class="font-body text-muted">Automatically bypass accounts marked as private.</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="safety-skip-private" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="setting-item">
+                            <div>
+                                <h4 class="font-heading">Skip Accounts with No Profile Picture (skip_no_profile_pic)</h4>
+                                <p class="font-body text-muted">Filter out avatar-less spam profiles.</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="safety-skip-nopic" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="setting-item">
+                            <div>
+                                <h4 class="font-heading">Skip Blue Checkmark Verified Accounts (set_skip_verified)</h4>
+                                <p class="font-body text-muted">Bypass verified celebrities or high-profile accounts.</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="safety-skip-verified" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="font-accent">Skip Business Accounts</label>
+                                <select id="safety-skip-business-select" class="form-input font-body">
+                                    <option value="none">Target All Accounts</option>
+                                    <option value="business">Skip Business Accounts (Personal Only)</option>
+                                    <option value="non_business">Skip Non-Business Accounts (Business Only)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="font-accent">Blacklisted Business Categories (Comma-separated)</label>
+                                <input type="text" id="safety-skip-categories" class="form-input font-body" placeholder="e.g. Shopping & Retail, E-commerce">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. Word Filters -->
+                    <div class="setting-group">
+                        <h3 class="font-heading setting-title">3. Keyword Blacklists & Mandatory Terms</h3>
+                        <div class="form-group">
+                            <label class="font-accent">Ignore Words / Blacklisted Keywords (Comma-separated: #nsfw, shop, giveaway, fake)</label>
+                            <input type="text" id="safety-ignore-words" class="form-input font-mono" value="nsfw, giveaway, fake, scam">
+                        </div>
+                        <div class="form-group">
+                            <label class="font-accent">Mandatory Words (Bio/Caption must contain at least one of these)</label>
+                            <input type="text" id="safety-mandatory-words" class="form-input font-mono" placeholder="e.g. photographer, creator, fitness">
+                        </div>
+                    </div>
+
+                    <!-- 4. User Blacklist & Language -->
+                    <div class="setting-group">
+                        <h3 class="font-heading setting-title">4. Username Blacklist & Language Character-Sets</h3>
+                        <div class="form-group">
+                            <label class="font-accent">Ignored Usernames Blacklist (Comma-separated)</label>
+                            <input type="text" id="safety-ignore-users" class="form-input font-mono" placeholder="e.g. spam_acc1, competitor_bot">
+                        </div>
+                        <div class="form-group">
+                            <label class="font-accent">Mandatory Language Character-Set</label>
+                            <select id="safety-language-select" class="form-input font-body">
+                                <option value="LATIN">LATIN (English, Spanish, French, German, etc.)</option>
+                                <option value="CYRILLIC">CYRILLIC (Russian, Ukrainian, etc.)</option>
+                                <option value="ARABIC">ARABIC</option>
+                                <option value="CJK">CJK (Chinese, Japanese, Korean)</option>
+                                <option value="ANY">ANY Language</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Live Profile Inspector -->
+                    <div class="spintax-tester-box">
+                        <h4 class="font-heading text-amber">Live Profile Safety Inspector</h4>
+                        <p class="font-body text-muted">Test candidate profile parameters against your active guardrails before launching automation!</p>
+                        <div class="form-row">
+                            <input type="text" id="test-username" class="form-input font-mono" placeholder="Username (e.g. @test_user)" value="test_user">
+                            <input type="number" id="test-followers" class="form-input font-mono" placeholder="Followers" value="500">
+                            <input type="number" id="test-following" class="form-input font-mono" placeholder="Following" value="200">
+                        </div>
+                        <div class="spintax-test-actions">
+                            <button type="button" class="btn-secondary font-accent" id="test-verify-btn">Inspect Candidate Safety</button>
+                        </div>
+                        <div id="safety-test-results" class="font-mono log-box" style="display: none;"></div>
+                    </div>
+
+                    <div class="settings-actions">
+                        <button type="submit" class="btn-primary font-accent">Save Safety Guardrails</button>
+                        <span id="safety-status-msg" class="font-body text-green" style="display: none;">Safety rules updated!</span>
+                    </div>
+
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Page JavaScript -->
+    <script src="/static/js/app.js"></script>
+    <script src="/static/js/safety.js"></script>
+</body>
+</html>

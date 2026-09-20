@@ -7,7 +7,7 @@ import logging
 
 from database import engine, Base, get_db, AutomationTask
 from automation import run_automation_task
-from routers import auth, accounts, tasks, settings, engagement
+from routers import auth, accounts, tasks, settings, engagement, safety
 
 # Initialize DB tables
 Base.metadata.create_all(bind=engine)
@@ -21,6 +21,7 @@ app.include_router(accounts.router)
 app.include_router(tasks.router)
 app.include_router(settings.router)
 app.include_router(engagement.router)
+app.include_router(safety.router)
 
 
 # Mount the pages directory to serve static files (CSS, JS, images)
@@ -76,6 +77,15 @@ async def read_engagement():
     if os.path.exists(path):
         return FileResponse(path)
     return {"message": "Engagement rules page coming soon."}
+
+@app.get("/safety")
+async def read_safety():
+    """Serve the safety guardrails configuration page."""
+    path = os.path.join(pages_dir, "safety.html")
+    if os.path.exists(path):
+        return FileResponse(path)
+    return {"message": "Safety guardrails page coming soon."}
+
 
 
 @app.get("/api/health")

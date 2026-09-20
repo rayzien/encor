@@ -118,8 +118,46 @@ class EngagementRule(Base):
     do_story_enabled = Column(Boolean, default=True)
     do_story_percentage = Column(Integer, default=100)
 
+class SafetyRule(Base):
+    """Model for Engine 3 smart filtering and safety guardrails."""
+    __tablename__ = "safety_rules"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, default="default_safety")
+    account_id = Column(Integer, ForeignKey("accounts.id"), nullable=True)
+
+    # Relationship bounds
+    relationship_bounds_enabled = Column(Boolean, default=True)
+    min_followers = Column(Integer, default=30)
+    max_followers = Column(Integer, default=50000)
+    min_following = Column(Integer, default=20)
+    max_following = Column(Integer, default=7500)
+    min_posts = Column(Integer, default=5)
+    max_posts = Column(Integer, default=10000)
+    potency_ratio = Column(String, default="0.0")  # min followers-to-following ratio, e.g. 1.5
+
+    # Skip User attributes
+    skip_private = Column(Boolean, default=True)
+    private_percentage = Column(Integer, default=100)
+    skip_no_profile_pic = Column(Boolean, default=True)
+    no_profile_pic_percentage = Column(Integer, default=100)
+    skip_business = Column(Boolean, default=False)
+    skip_non_business = Column(Boolean, default=False)
+    skip_business_categories_json = Column(Text, default='[]')
+    dont_skip_business_categories_json = Column(Text, default='[]')
+    skip_verified = Column(Boolean, default=True)
+
+    # Keyword filters
+    mandatory_words_json = Column(Text, default='[]')
+    ignore_words_json = Column(Text, default='["nsfw", "giveaway", "fake", "scam"]')
+
+    # Blacklist & Language
+    ignore_users_json = Column(Text, default='[]')
+    mandatory_language_json = Column(Text, default='["LATIN"]')  # LATIN, CYRILLIC, ARABIC, CJK, GREEK
+
 # Create tables
 Base.metadata.create_all(bind=engine)
+
 
 
 def get_db():
