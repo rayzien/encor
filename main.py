@@ -7,9 +7,9 @@ import logging
 
 from database import engine, Base, get_db, AutomationTask
 from automation import run_automation_task
-from routers import auth
+from routers import auth, accounts, tasks, settings
 
-# Initialize DB tables (redundant if database.py is run directly, but good practice here)
+# Initialize DB tables
 Base.metadata.create_all(bind=engine)
 
 logging.basicConfig(level=logging.INFO)
@@ -17,6 +17,10 @@ logging.basicConfig(level=logging.INFO)
 app = FastAPI(title="Encor API")
 
 app.include_router(auth.router)
+app.include_router(accounts.router)
+app.include_router(tasks.router)
+app.include_router(settings.router)
+
 
 # Mount the pages directory to serve static files (CSS, JS, images)
 pages_dir = os.path.join(os.path.dirname(__file__), "pages")

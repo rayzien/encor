@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encor - Task Automation Engine</title>
+    
+    <!-- Google Fonts (8 Fonts) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;1,600&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@500;600&family=Poppins:wght@400;600&family=Sora:wght@400;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+    <!-- Transition Overlay -->
+    <div id="page-overlay" class="page-overlay"></div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-brand font-heading">
+                ENCOR<span class="brand-accent">.</span>
+            </a>
+            
+            <div class="nav-menu" id="nav-menu">
+                <a href="/" class="nav-link font-accent">Home</a>
+                <a href="/accounts" class="nav-link font-accent">Accounts</a>
+                <a href="/tasks" class="nav-link active font-accent">Tasks</a>
+                <a href="/settings" class="nav-link font-accent">Settings</a>
+                <a href="/login" class="nav-link font-accent nav-login-btn">Sign In</a>
+            </div>
+
+            <button class="burger-btn" id="burger-btn" aria-label="Toggle navigation">
+                <span class="burger-bar"></span>
+                <span class="burger-bar"></span>
+                <span class="burger-bar"></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main class="dashboard-container">
+        
+        <!-- Header Section -->
+        <header class="dashboard-header reveal-item">
+            <div class="header-titles">
+                <h1 class="font-heading page-title">Targeting & Discovery Engine</h1>
+                <p class="font-body text-muted">Configure and launch Playwright automation workflows across 13 targeted discovery modes.</p>
+            </div>
+            <button class="btn-primary font-accent" id="open-launch-modal-btn">Launch New Task</button>
+        </header>
+
+        <!-- Stats Grid -->
+        <section class="stats-grid reveal-item">
+            <div class="stat-card">
+                <span class="stat-label font-accent">Total Queued/Run</span>
+                <span class="stat-value font-mono" id="stat-total-tasks">0</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label font-accent">Currently Running</span>
+                <span class="stat-value font-mono text-amber" id="stat-running-tasks">0</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label font-accent">Completed Tasks</span>
+                <span class="stat-value font-mono text-green" id="stat-completed-tasks">0</span>
+            </div>
+        </section>
+
+        <!-- Tasks List / Logs Container -->
+        <section class="reveal-item section-margin">
+            <h2 class="font-heading section-title">Active & Historical Automation Tasks</h2>
+            <div id="tasks-container" class="tasks-list">
+                <div class="empty-state">
+                    <p class="font-body text-muted">No automation tasks initiated yet. Click 'Launch New Task' to select a targeting workflow.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Launch Task Modal -->
+    <div class="modal-backdrop" id="launch-task-modal" style="display: none;">
+        <div class="modal-content card-glow large-modal">
+            <h3 class="font-heading modal-title">Launch Targeted Discovery Workflow</h3>
+            <form id="launch-task-form">
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="font-accent">Target Account</label>
+                        <select id="task-account-select" class="form-input font-body" required>
+                            <option value="">Select Connected Account...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="font-accent">Action Workflow Type</label>
+                        <select id="task-type-select" class="form-input font-body" required>
+                            <option value="like_by_tags">like_by_tags (Hashtag Like)</option>
+                            <option value="follow_by_tags">follow_by_tags (Hashtag Follow)</option>
+                            <option value="like_by_locations">like_by_locations (Location Like)</option>
+                            <option value="follow_by_locations">follow_by_locations (Location Follow)</option>
+                            <option value="follow_user_followers">follow_user_followers (Competitor Followers)</option>
+                            <option value="follow_user_following">follow_user_following (Competitor Following)</option>
+                            <option value="follow_by_list">follow_by_list (Custom Predefined List)</option>
+                            <option value="interact_by_users">interact_by_users (Direct User Likes)</option>
+                            <option value="interact_user_followers">interact_user_followers (Followers Likes)</option>
+                            <option value="interact_user_following">interact_user_following (Following Likes)</option>
+                            <option value="like_by_feed">like_by_feed (Home Feed Scroll)</option>
+                            <option value="story_viewer">story_viewer (Story View)</option>
+                            <option value="comment_by_tags">comment_by_tags (Hashtag Comment)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Dynamic Config Options based on selection -->
+                <div class="form-group">
+                    <label class="font-accent">Targets (Comma separated: hashtags, locations, or usernames)</label>
+                    <input type="text" id="task-targets-input" class="form-input font-mono" placeholder="e.g. photography, travel, design" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="font-accent">Target Action Count / Amount</label>
+                        <input type="number" id="task-amount-input" class="form-input font-mono" value="10" min="1" max="500">
+                    </div>
+                    <div class="form-group">
+                        <label class="font-accent">Options</label>
+                        <div class="checkbox-group">
+                            <label class="font-body"><input type="checkbox" id="task-skip-top" checked> Skip Top Posts (Recent Only)</label>
+                            <label class="font-body"><input type="checkbox" id="task-randomize" checked> Randomize Targets</label>
+                            <label class="font-body"><input type="checkbox" id="task-interact"> Interact (Like Recent Post)</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary font-accent" id="close-launch-modal-btn">Cancel</button>
+                    <button type="submit" class="btn-primary font-accent">Start Automation Workflow</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <!-- Page JavaScript -->
+    <script src="/static/js/app.js"></script>
+    <script src="/static/js/tasks.js"></script>
+</body>
+</html>
