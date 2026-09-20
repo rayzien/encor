@@ -3,20 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Encor - Automation Dashboard</title>
+    <title>Encor - Dashboard</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@400..700&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
     
-    <!-- FontAwesome for icons -->
+    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
+
+    <!-- Page Transition Overlay -->
+    <div class="page-transition" id="page-transition"></div>
 
     <!-- Navigation -->
     <nav id="navbar">
@@ -25,14 +28,13 @@
             ENCOR
         </div>
         
-        <!-- Desktop Links -->
         <ul class="nav-links font-body">
-            <li><a href="#dashboard">Dashboard</a></li>
-            <li><a href="#tasks">Tasks</a></li>
-            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="/" class="nav-active">Home</a></li>
+            <li><a href="/accounts" class="page-link">Accounts</a></li>
+            <li><a href="/tasks" class="page-link">Tasks</a></li>
+            <li><a href="/settings" class="page-link">Settings</a></li>
         </ul>
 
-        <!-- Burger Icon -->
         <div class="burger-menu" id="burger">
             <div class="burger-line line1"></div>
             <div class="burger-line line2"></div>
@@ -43,114 +45,174 @@
     <!-- Mobile Menu -->
     <div class="mobile-menu" id="mobile-menu">
         <ul>
-            <li><a href="#dashboard" class="mobile-link">Dashboard</a></li>
-            <li><a href="#tasks" class="mobile-link">Tasks</a></li>
-            <li><a href="#gallery" class="mobile-link">Gallery</a></li>
+            <li><a href="/" class="mobile-link">Home</a></li>
+            <li><a href="/accounts" class="mobile-link page-link">Accounts</a></li>
+            <li><a href="/tasks" class="mobile-link page-link">Tasks</a></li>
+            <li><a href="/settings" class="mobile-link page-link">Settings</a></li>
         </ul>
     </div>
 
-    <!-- The parallax wrapper with CSS perspective (from reference) -->
+    <!-- Parallax Wrapper -->
     <main class="parallax-wrapper" id="scroll-container">
         
-        <!-- Hero Section with Parallax Layers -->
+        <!-- Hero Section -->
         <header class="parallax-section">
-            <!-- Background Sky/Sun Layer (moves slowest) -->
             <div class="parallax-layer layer-bg"></div>
-            
-            <!-- Midground Mountains Layer -->
             <div class="parallax-layer layer-mountains"></div>
-            
-            <!-- Framing overlay -->
             <div class="framing-overlay"></div>
-
-            <!-- Title Content -->
             <div class="hero-title-container">
-                <span class="hero-script font-script">the story of</span>
+                <span class="hero-script font-script">welcome to</span>
                 <h1 class="hero-main-title font-display">ENCOR</h1>
             </div>
-
-            <!-- Foreground Silhouettes -->
             <div class="parallax-layer layer-foreground"></div>
         </header>
 
-        <!-- Dashboard Section -->
-        <section id="dashboard" class="content-section">
-            <div style="max-width: 900px; margin: 0 auto;">
-                <div style="text-align: center; margin-bottom: 4rem;" class="reveal">
-                    <h2 class="font-display" style="font-size: 2.5rem; color: var(--accent); margin-bottom: 1rem;">The Automation Journey</h2>
-                    <p class="font-script" style="font-size: 1.5rem; color: #9ca3af;">Where will your tasks take you?</p>
-                </div>
+        <!-- ==========================================
+             DASHBOARD CONTENT
+             ========================================== -->
+        
+        <!-- Status & Controls Section -->
+        <section class="content-section">
+            <div class="dashboard-container">
                 
-                <div class="grid grid-cols-2 gap-10">
-                    <div class="card reveal">
-                        <i class="fa-solid fa-rocket" style="font-size: 2rem; color: var(--accent); margin-bottom: 1rem; display: block;"></i>
-                        <h3 class="font-display" style="font-size: 1.5rem; margin-bottom: 0.75rem;">Launch Task</h3>
-                        <p style="color: #9ca3af; line-height: 1.6; margin-bottom: 1.5rem;">
-                            Venture into the unknown. Start a new automation run across your accounts and navigate through the data.
-                        </p>
-                        <button class="btn btn-primary" onclick="launchTask()">Execute</button>
-                    </div>
-                    <div class="card reveal" style="transition-delay: 0.2s;">
-                        <i class="fa-solid fa-compass" style="font-size: 2rem; color: var(--accent); margin-bottom: 1rem; display: block;"></i>
-                        <h3 class="font-display" style="font-size: 1.5rem; margin-bottom: 0.75rem;">Manage Accounts</h3>
-                        <p style="color: #9ca3af; line-height: 1.6; margin-bottom: 1.5rem;">
-                            The compass is your best friend. View and manage your connected automation targets seamlessly.
-                        </p>
-                        <button class="btn btn-secondary">View Accounts</button>
+                <!-- Status Header -->
+                <div class="reveal">
+                    <div class="section-header">
+                        <h2 class="font-display" style="font-size: 2.5rem; color: var(--accent);">Command Center</h2>
+                        <p class="font-script" style="font-size: 1.4rem; color: #9ca3af;">Your automation status at a glance.</p>
                     </div>
                 </div>
+
+                <!-- Status Cards Row -->
+                <div class="status-row reveal">
+                    <!-- Engine Status -->
+                    <div class="status-card">
+                        <div class="status-card-icon">
+                            <i class="fa-solid fa-server"></i>
+                        </div>
+                        <div class="status-card-info">
+                            <span class="status-label font-body">Engine Status</span>
+                            <span class="status-value" id="engine-status">
+                                <span class="status-dot dot-green"></span> Online
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Running Tasks -->
+                    <div class="status-card">
+                        <div class="status-card-icon" style="background: rgba(234, 179, 8, 0.15); color: #eab308;">
+                            <i class="fa-solid fa-bolt"></i>
+                        </div>
+                        <div class="status-card-info">
+                            <span class="status-label font-body">Running Tasks</span>
+                            <span class="status-value" id="running-count">0</span>
+                        </div>
+                    </div>
+
+                    <!-- Total Accounts -->
+                    <div class="status-card">
+                        <div class="status-card-icon" style="background: rgba(59, 130, 246, 0.15); color: #3b82f6;">
+                            <i class="fa-solid fa-users"></i>
+                        </div>
+                        <div class="status-card-info">
+                            <span class="status-label font-body">Total Accounts</span>
+                            <span class="status-value" id="account-count">3</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Master Toggle -->
+                <div class="master-toggle-row reveal">
+                    <div class="master-toggle-card">
+                        <div>
+                            <h3 class="font-display" style="font-size: 1.2rem; margin-bottom: 4px;">Automation Engine</h3>
+                            <p class="font-body" style="color: #9ca3af; font-size: 0.85rem;" id="toggle-label">All systems stopped</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="master-toggle">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
             </div>
         </section>
 
-        <!-- Tasks Section -->
-        <section id="tasks" class="content-section" style="background: #18181b; border-top: 1px solid #27272a;">
-            <div style="max-width: 900px; margin: 0 auto;">
-                <h2 class="font-display reveal" style="font-size: 2.5rem; text-align: center; margin-bottom: 3rem;">Active Tasks</h2>
-                
-                <div class="grid grid-cols-3 gap-6">
-                    <div class="card reveal">
-                        <i class="fa-solid fa-chart-line" style="font-size: 2rem; color: var(--accent); margin-bottom: 1rem; display: block;"></i>
-                        <h3 class="font-display" style="font-size: 1.2rem; margin-bottom: 0.5rem;">Analytics</h3>
-                        <p style="color: #9ca3af; line-height: 1.6;">Track performance and engagement metrics in real-time.</p>
-                    </div>
-                    <div class="card reveal" style="transition-delay: 0.2s;">
-                        <i class="fa-solid fa-users" style="font-size: 2rem; color: var(--accent); margin-bottom: 1rem; display: block;"></i>
-                        <h3 class="font-display" style="font-size: 1.2rem; margin-bottom: 0.5rem;">Engagement</h3>
-                        <p style="color: #9ca3af; line-height: 1.6;">Automate interactions with precision and consistency.</p>
-                    </div>
-                    <div class="card reveal" style="transition-delay: 0.4s;">
-                        <i class="fa-solid fa-shield-halved" style="font-size: 2rem; color: var(--accent); margin-bottom: 1rem; display: block;"></i>
-                        <h3 class="font-display" style="font-size: 1.2rem; margin-bottom: 0.5rem;">Safety</h3>
-                        <p style="color: #9ca3af; line-height: 1.6;">Built-in rate limiting and human-like behavior patterns.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <!-- Accounts List Section -->
+        <section class="content-section" style="background: var(--card-bg); border-top: 1px solid var(--card-border);">
+            <div class="dashboard-container">
 
-        <!-- Gallery Section -->
-        <section id="gallery" class="content-section" style="border-top: 1px solid #27272a;">
-            <div style="max-width: 1100px; margin: 0 auto;">
-                <h2 class="font-display reveal" style="font-size: 2.5rem; text-align: center; margin-bottom: 3rem;">Visual Evidence</h2>
-                
-                <div class="grid grid-cols-3 gap-6">
-                    <div class="gallery-item reveal">
-                        <img src="https://placehold.co/600x400/d97706/ffffff?text=Dashboard" alt="Dashboard">
-                        <div class="gallery-overlay">
-                            <span class="font-script" style="font-size: 1.5rem;">Dashboard View</span>
+                <div class="section-header reveal">
+                    <h2 class="font-display" style="font-size: 2rem; color: var(--accent);">Accounts</h2>
+                    <p class="font-script" style="font-size: 1.3rem; color: #9ca3af;">Manage your connected profiles.</p>
+                </div>
+
+                <!-- Account Cards -->
+                <div class="account-list" id="account-list">
+
+                    <!-- Account 1 — Safe (green) -->
+                    <div class="account-card reveal">
+                        <div class="account-safety safety-green" title="Safe"></div>
+                        <img class="account-avatar" src="https://api.dicebear.com/7.x/thumbs/svg?seed=Felix&backgroundColor=d97706" alt="avatar">
+                        <div class="account-details">
+                            <div class="account-name font-display">travel_nomad</div>
+                            <div class="account-bio font-body">🌍 Exploring the world one city at a time. Travel blogger & photographer.</div>
+                            <div class="account-meta font-body">
+                                <span><i class="fa-solid fa-heart"></i> 12.4K</span>
+                                <span><i class="fa-solid fa-image"></i> 342</span>
+                                <span><i class="fa-solid fa-user-group"></i> 8.1K</span>
+                            </div>
+                        </div>
+                        <div class="account-actions">
+                            <label class="toggle-switch toggle-sm">
+                                <input type="checkbox" class="account-toggle" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
                         </div>
                     </div>
-                    <div class="gallery-item reveal" style="transition-delay: 0.2s;">
-                        <img src="https://placehold.co/600x400/18181b/ffffff?text=Analytics" alt="Analytics">
-                        <div class="gallery-overlay">
-                            <span class="font-script" style="font-size: 1.5rem;">Real-time Data</span>
+
+                    <!-- Account 2 — Warning (yellow) -->
+                    <div class="account-card reveal" style="transition-delay: 0.15s;">
+                        <div class="account-safety safety-yellow" title="Warning — Rate limited"></div>
+                        <img class="account-avatar" src="https://api.dicebear.com/7.x/thumbs/svg?seed=Bella&backgroundColor=eab308" alt="avatar">
+                        <div class="account-details">
+                            <div class="account-name font-display">foodie_diaries</div>
+                            <div class="account-bio font-body">🍕 Food is art. Reviewing restaurants worldwide. DM for collabs!</div>
+                            <div class="account-meta font-body">
+                                <span><i class="fa-solid fa-heart"></i> 5.2K</span>
+                                <span><i class="fa-solid fa-image"></i> 189</span>
+                                <span><i class="fa-solid fa-user-group"></i> 3.7K</span>
+                            </div>
+                        </div>
+                        <div class="account-actions">
+                            <label class="toggle-switch toggle-sm">
+                                <input type="checkbox" class="account-toggle">
+                                <span class="toggle-slider"></span>
+                            </label>
                         </div>
                     </div>
-                    <div class="gallery-item reveal" style="transition-delay: 0.4s;">
-                        <img src="https://placehold.co/600x400/522b13/ffffff?text=Automation" alt="Automation">
-                        <div class="gallery-overlay">
-                            <span class="font-script" style="font-size: 1.5rem;">Task Engine</span>
+
+                    <!-- Account 3 — Danger (red) -->
+                    <div class="account-card reveal" style="transition-delay: 0.3s;">
+                        <div class="account-safety safety-red" title="At Risk — Action required"></div>
+                        <img class="account-avatar" src="https://api.dicebear.com/7.x/thumbs/svg?seed=Shadow&backgroundColor=ef4444" alt="avatar">
+                        <div class="account-details">
+                            <div class="account-name font-display">dark_lens_studio</div>
+                            <div class="account-bio font-body">📸 Cinematic photography. Moody edits. Bookings open for 2026.</div>
+                            <div class="account-meta font-body">
+                                <span><i class="fa-solid fa-heart"></i> 28.9K</span>
+                                <span><i class="fa-solid fa-image"></i> 712</span>
+                                <span><i class="fa-solid fa-user-group"></i> 15.3K</span>
+                            </div>
+                        </div>
+                        <div class="account-actions">
+                            <label class="toggle-switch toggle-sm">
+                                <input type="checkbox" class="account-toggle">
+                                <span class="toggle-slider"></span>
+                            </label>
                         </div>
                     </div>
+
                 </div>
             </div>
         </section>
@@ -162,7 +224,6 @@
 
     </main>
 
-    <!-- Custom JS -->
     <script src="/static/js/app.js"></script>
 </body>
 </html>

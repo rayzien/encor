@@ -34,11 +34,35 @@ async def read_login():
 
 @app.get("/")
 async def read_index():
-    """Serve the main HTML page."""
+    """Serve the main dashboard page."""
     index_path = os.path.join(pages_dir, "index.html")
     if os.path.exists(index_path):
         return FileResponse(index_path)
     return {"message": "Welcome to Encor! (index.html not found)"}
+
+@app.get("/accounts")
+async def read_accounts():
+    """Serve the accounts page."""
+    path = os.path.join(pages_dir, "accounts.html")
+    if os.path.exists(path):
+        return FileResponse(path)
+    return {"message": "Accounts page coming soon."}
+
+@app.get("/tasks")
+async def read_tasks():
+    """Serve the tasks page."""
+    path = os.path.join(pages_dir, "tasks.html")
+    if os.path.exists(path):
+        return FileResponse(path)
+    return {"message": "Tasks page coming soon."}
+
+@app.get("/settings")
+async def read_settings():
+    """Serve the settings page."""
+    path = os.path.join(pages_dir, "settings.html")
+    if os.path.exists(path):
+        return FileResponse(path)
+    return {"message": "Settings page coming soon."}
 
 @app.get("/api/health")
 async def health_check(db: Session = Depends(get_db)):

@@ -1,11 +1,9 @@
-// Encor App JS — Matches reference parallax_adventure_website.html logic
+// Encor App JS — Dashboard logic + Navigation transitions
 
 document.addEventListener('DOMContentLoaded', () => {
 
     // -----------------------------------------------
     // 1. Navbar Scroll Effect
-    // We listen on the parallax-wrapper, NOT window,
-    // because that's where the scroll actually happens.
     // -----------------------------------------------
     const scrollContainer = document.getElementById('scroll-container');
     const navbar = document.getElementById('navbar');
@@ -17,8 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 navbar.classList.remove('scrolled');
             }
-
-            // Trigger reveal animations on scroll
             reveal();
         });
     }
@@ -28,14 +24,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // -----------------------------------------------
     const burger = document.getElementById('burger');
     const mobileMenu = document.getElementById('mobile-menu');
-    const mobileLinks = document.querySelectorAll('.mobile-link');
     let isMenuOpen = false;
 
     function toggleMenu() {
         isMenuOpen = !isMenuOpen;
-        burger.classList.toggle('toggle');
-        mobileMenu.classList.toggle('active');
-
+        if (burger) burger.classList.toggle('toggle');
+        if (mobileMenu) mobileMenu.classList.toggle('active');
         if (scrollContainer) {
             scrollContainer.style.overflowY = isMenuOpen ? 'hidden' : 'auto';
         }
@@ -45,38 +39,42 @@ document.addEventListener('DOMContentLoaded', () => {
         burger.addEventListener('click', toggleMenu);
     }
 
-    // Close mobile menu when a link is clicked
-    mobileLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            toggleMenu();
-
-            const targetId = link.getAttribute('href').substring(1);
-            const targetSection = document.getElementById(targetId);
-
-            if (targetSection) {
-                setTimeout(() => {
-                    targetSection.scrollIntoView({ behavior: 'smooth' });
-                }, 400);
-            }
-        });
-    });
-
-    // Handle Desktop Links smooth scroll
-    const desktopLinks = document.querySelectorAll('.nav-links a');
-    desktopLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const targetId = link.getAttribute('href').substring(1);
-            const targetSection = document.getElementById(targetId);
-            if (targetSection) {
-                targetSection.scrollIntoView({ behavior: 'smooth' });
-            }
+    // Close mobile menu on link click
+    document.querySelectorAll('.mobile-link').forEach(link => {
+        link.addEventListener('click', () => {
+            if (isMenuOpen) toggleMenu();
         });
     });
 
     // -----------------------------------------------
-    // 3. Scroll Reveal Animation
+    // 3. Page Transitions (smooth fade on nav)
+    // -----------------------------------------------
+    const transitionOverlay = document.getElementById('page-transition');
+    const pageLinks = document.querySelectorAll('.page-link');
+
+    pageLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const target = link.getAttribute('href');
+
+            if (transitionOverlay) {
+                transitionOverlay.classList.add('active');
+                setTimeout(() => {
+                    window.location.href = target;
+                }, 400);
+            } else {
+                window.location.href = target;
+            }
+        });
+    });
+
+    // Fade in on page load
+    if (transitionOverlay) {
+        transitionOverlay.classList.remove('active');
+    }
+
+    // -----------------------------------------------
+    // 4. Scroll Reveal Animation
     // -----------------------------------------------
     function reveal() {
         const reveals = document.querySelectorAll('.reveal');
@@ -84,50 +82,83 @@ document.addEventListener('DOMContentLoaded', () => {
 
         reveals.forEach(el => {
             const elementTop = el.getBoundingClientRect().top;
-            const revealPoint = 100;
-
-            if (elementTop < windowHeight - revealPoint) {
+            if (elementTop < windowHeight - 100) {
                 el.classList.add('active');
             }
         });
     }
 
-    // Trigger once on load
     reveal();
 
     // -----------------------------------------------
-    // 4. Backend Health Check
+    // 5. Master Toggle Logic
+    // -----------------------------------------------
+    const masterToggle = document.getElementById('master-toggle');
+    const toggleLabel = document.getElementById('toggle-label');
+
+    if (masterToggle && toggleLabel) {
+        masterToggle.addEventListener('change', () => {
+            if (masterToggle.checked) {
+                toggleLabel.textContent = 'Engine running — all active accounts engaged';
+                toggleLabel.style.color = '#22c55e';
+            } else {
+                toggleLabel.textContent = 'All systems stopped';
+                toggleLabel.style.color = '#9ca3af';
+            }
+        });
+    }
+
+    // -----------------------------------------------
+    // 6. Account Toggle Logic
+    // -----------------------------------------------
+    const accountToggles = document.querySelectorAll('.account-toggle');
+    const runningCount = document.getElementById('running-count');
+    
+    function updateRunningCount() {
+        if (!runningCount) return;
+        let count = 0;
+        accountToggles.forEach(t => { if (t.checked) count++; });
+        runningCount.textContent = count;
+    }
+
+    accountToggles.forEach(toggle => {
+        toggle.addEventListener('change', updateRunningCount);
+    });
+
+    updateRunningCount();
+
+    // -----------------------------------------------
+    // 7. Backend Health Check
     // -----------------------------------------------
     checkHealth();
 });
 
 
-// -----------------------------------------------
-// Backend API Functions
-// -----------------------------------------------
+// Backend API
 async function checkHealth() {
     try {
         const response = await fetch('/api/health');
         const data = await response.json();
         if (data.status === 'ok') {
             console.log('✅ Encor Backend Online: ' + data.message);
-        } else {
-            console.warn('⚠️ Backend Issue detected.');
         }
     } catch (error) {
         console.error('❌ Connection error: Could not reach backend.');
+        const statusEl = document.getElementById('engine-status');
+        if (statusEl) {
+            statusEl.innerHTML = '<span class="status-dot dot-red"></span> Offline';
+        }
     }
 }
 
 async function launchTask() {
-    console.log('🚀 Initiating Playwright automation sequence...');
     try {
         const response = await fetch('/api/automation/start', { method: 'POST' });
         const data = await response.json();
         if (data.status === 'ok') {
-            alert('✅ Automation task queued successfully! Task ID: ' + data.task_id);
+            alert('✅ Task queued! ID: ' + data.task_id);
         }
     } catch (error) {
-        alert('❌ Failed to start automation task.');
+        alert('❌ Failed to start task.');
     }
 }
