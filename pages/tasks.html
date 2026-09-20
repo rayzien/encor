@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Encor - Task Automation Engine</title>
+    <title>ENCOR - Task Workflows</title>
     
-    <!-- Google Fonts (8 Fonts) -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;1,600&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@500;600&family=Poppins:wght@400;600&family=Sora:wght@400;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@400..700&family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
@@ -18,59 +21,75 @@
     <div id="page-overlay" class="page-overlay"></div>
 
     <!-- Navigation Bar -->
-    <nav class="navbar" id="navbar">
-        <div class="nav-container">
-            <a href="/" class="nav-brand font-heading">
-                ENCOR<span class="brand-accent">.</span>
-            </a>
-            
-            <div class="nav-menu" id="nav-menu">
-                <a href="/" class="nav-link font-accent">Home</a>
-                <a href="/accounts" class="nav-link font-accent">Accounts</a>
-                <a href="/tasks" class="nav-link active font-accent">Tasks</a>
-                <a href="/settings" class="nav-link font-accent">Settings</a>
-                <a href="/login" class="nav-link font-accent nav-login-btn">Sign In</a>
-            </div>
+    <nav id="navbar">
+        <a href="/" class="logo font-display">
+            <i class="fa-solid fa-mountain-sun text-amber-500"></i>
+            ENCOR
+        </a>
+        
+        <!-- Desktop Links -->
+        <ul class="nav-links font-body">
+            <li><a href="/">Home</a></li>
+            <li><a href="/accounts">Accounts</a></li>
+            <li><a href="/tasks" class="active">Tasks</a></li>
+            <li><a href="/engagement">Engagement</a></li>
+            <li><a href="/safety">Safety</a></li>
+            <li><a href="/settings">Settings</a></li>
+            <li><a href="/login">Sign In</a></li>
+        </ul>
 
-            <button class="burger-btn" id="burger-btn" aria-label="Toggle navigation">
-                <span class="burger-bar"></span>
-                <span class="burger-bar"></span>
-                <span class="burger-bar"></span>
-            </button>
+        <!-- Burger Menu Icon -->
+        <div class="burger-menu" id="burger">
+            <div class="burger-line line1"></div>
+            <div class="burger-line line2"></div>
+            <div class="burger-line line3"></div>
         </div>
     </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu" id="mobile-menu">
+        <ul>
+            <li><a href="/" class="mobile-link">Home</a></li>
+            <li><a href="/accounts" class="mobile-link">Accounts</a></li>
+            <li><a href="/tasks" class="mobile-link active">Tasks</a></li>
+            <li><a href="/engagement" class="mobile-link">Engagement</a></li>
+            <li><a href="/safety" class="mobile-link">Safety</a></li>
+            <li><a href="/settings" class="mobile-link">Settings</a></li>
+            <li><a href="/login" class="mobile-link">Sign In</a></li>
+        </ul>
+    </div>
 
     <!-- Main Content Container -->
     <main class="dashboard-container">
         
         <!-- Header Section -->
-        <header class="dashboard-header reveal-item">
-            <div class="header-titles">
-                <h1 class="font-heading page-title">Targeting & Discovery Engine</h1>
-                <p class="font-body text-muted">Configure and launch Playwright automation workflows across 13 targeted discovery modes.</p>
+        <header class="dashboard-header reveal">
+            <div>
+                <h1 class="page-title font-display">Targeting & Discovery Workflows</h1>
+                <p class="page-subtitle font-script">Launch Playwright automation tasks across 13 discovery modes.</p>
             </div>
-            <button class="btn-primary font-accent" id="open-launch-modal-btn">Launch New Task</button>
+            <button class="btn btn-primary" id="open-launch-modal-btn">Launch New Task</button>
         </header>
 
         <!-- Stats Grid -->
-        <section class="stats-grid reveal-item">
+        <section class="stats-grid reveal">
             <div class="stat-card">
-                <span class="stat-label font-accent">Total Queued/Run</span>
+                <span class="stat-label">Total Workflows</span>
                 <span class="stat-value font-mono" id="stat-total-tasks">0</span>
             </div>
             <div class="stat-card">
-                <span class="stat-label font-accent">Currently Running</span>
+                <span class="stat-label">Currently Running</span>
                 <span class="stat-value font-mono text-amber" id="stat-running-tasks">0</span>
             </div>
             <div class="stat-card">
-                <span class="stat-label font-accent">Completed Tasks</span>
+                <span class="stat-label">Completed Workflows</span>
                 <span class="stat-value font-mono text-green" id="stat-completed-tasks">0</span>
             </div>
         </section>
 
-        <!-- Tasks List / Logs Container -->
-        <section class="reveal-item section-margin">
-            <h2 class="font-heading section-title">Active & Historical Automation Tasks</h2>
+        <!-- Tasks List Container -->
+        <section class="section-margin reveal">
+            <h2 class="font-display text-2xl mb-4 text-white">Automation Queue & Execution Logs</h2>
             <div id="tasks-container" class="tasks-list">
                 <div class="empty-state">
                     <p class="font-body text-muted">No automation tasks initiated yet. Click 'Launch New Task' to select a targeting workflow.</p>
@@ -82,20 +101,20 @@
 
     <!-- Launch Task Modal -->
     <div class="modal-backdrop" id="launch-task-modal" style="display: none;">
-        <div class="modal-content card-glow large-modal">
-            <h3 class="font-heading modal-title">Launch Targeted Discovery Workflow</h3>
+        <div class="modal-content card large-modal">
+            <h3 class="font-display modal-title">Launch Targeted Discovery Workflow</h3>
             <form id="launch-task-form">
                 
                 <div class="form-row">
                     <div class="form-group">
-                        <label class="font-accent">Target Account</label>
-                        <select id="task-account-select" class="form-input font-body" required>
+                        <label>Target Account</label>
+                        <select id="task-account-select" class="form-input" required>
                             <option value="">Select Connected Account...</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label class="font-accent">Action Workflow Type</label>
-                        <select id="task-type-select" class="form-input font-body" required>
+                        <label>Action Workflow Type</label>
+                        <select id="task-type-select" class="form-input" required>
                             <option value="like_by_tags">like_by_tags (Hashtag Like)</option>
                             <option value="follow_by_tags">follow_by_tags (Hashtag Follow)</option>
                             <option value="like_by_locations">like_by_locations (Location Like)</option>
@@ -113,30 +132,29 @@
                     </div>
                 </div>
 
-                <!-- Dynamic Config Options based on selection -->
                 <div class="form-group">
-                    <label class="font-accent">Targets (Comma separated: hashtags, locations, or usernames)</label>
+                    <label>Targets (Comma separated: hashtags, locations, or usernames)</label>
                     <input type="text" id="task-targets-input" class="form-input font-mono" placeholder="e.g. photography, travel, design" required>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label class="font-accent">Target Action Count / Amount</label>
+                        <label>Target Action Amount</label>
                         <input type="number" id="task-amount-input" class="form-input font-mono" value="10" min="1" max="500">
                     </div>
                     <div class="form-group">
-                        <label class="font-accent">Options</label>
-                        <div class="checkbox-group">
-                            <label class="font-body"><input type="checkbox" id="task-skip-top" checked> Skip Top Posts (Recent Only)</label>
-                            <label class="font-body"><input type="checkbox" id="task-randomize" checked> Randomize Targets</label>
-                            <label class="font-body"><input type="checkbox" id="task-interact"> Interact (Like Recent Post)</label>
+                        <label>Options</label>
+                        <div class="flex flex-col gap-2">
+                            <label class="flex items-center gap-2 text-sm text-gray-400 cursor-pointer"><input type="checkbox" id="task-skip-top" checked> Skip Top Posts (Recent Only)</label>
+                            <label class="flex items-center gap-2 text-sm text-gray-400 cursor-pointer"><input type="checkbox" id="task-randomize" checked> Randomize Targets</label>
+                            <label class="flex items-center gap-2 text-sm text-gray-400 cursor-pointer"><input type="checkbox" id="task-interact"> Interact (Like Recent Post)</label>
                         </div>
                     </div>
                 </div>
 
                 <div class="modal-actions">
-                    <button type="button" class="btn-secondary font-accent" id="close-launch-modal-btn">Cancel</button>
-                    <button type="submit" class="btn-primary font-accent">Start Automation Workflow</button>
+                    <button type="button" class="btn btn-secondary" id="close-launch-modal-btn">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Start Workflow</button>
                 </div>
 
             </form>

@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Encor - Instagram Accounts</title>
+    <title>ENCOR - Instagram Accounts</title>
     
-    <!-- Google Fonts (8 Fonts) -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;1,600&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@500;600&family=Poppins:wght@400;600&family=Sora:wght@400;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@400..700&family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
@@ -18,61 +21,76 @@
     <div id="page-overlay" class="page-overlay"></div>
 
     <!-- Navigation Bar -->
-    <nav class="navbar" id="navbar">
-        <div class="nav-container">
-            <a href="/" class="nav-brand font-heading">
-                ENCOR<span class="brand-accent">.</span>
-            </a>
-            
-            <div class="nav-menu" id="nav-menu">
-                <a href="/" class="nav-link font-accent">Home</a>
-                <a href="/accounts" class="nav-link active font-accent">Accounts</a>
-                <a href="/tasks" class="nav-link font-accent">Tasks</a>
-                <a href="/settings" class="nav-link font-accent">Settings</a>
-                <a href="/login" class="nav-link font-accent nav-login-btn">Sign In</a>
-            </div>
+    <nav id="navbar">
+        <a href="/" class="logo font-display">
+            <i class="fa-solid fa-mountain-sun text-amber-500"></i>
+            ENCOR
+        </a>
+        
+        <!-- Desktop Links -->
+        <ul class="nav-links font-body">
+            <li><a href="/">Home</a></li>
+            <li><a href="/accounts" class="active">Accounts</a></li>
+            <li><a href="/tasks">Tasks</a></li>
+            <li><a href="/engagement">Engagement</a></li>
+            <li><a href="/safety">Safety</a></li>
+            <li><a href="/settings">Settings</a></li>
+            <li><a href="/login">Sign In</a></li>
+        </ul>
 
-            <button class="burger-btn" id="burger-btn" aria-label="Toggle navigation">
-                <span class="burger-bar"></span>
-                <span class="burger-bar"></span>
-                <span class="burger-bar"></span>
-            </button>
+        <!-- Burger Menu Icon -->
+        <div class="burger-menu" id="burger">
+            <div class="burger-line line1"></div>
+            <div class="burger-line line2"></div>
+            <div class="burger-line line3"></div>
         </div>
     </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu" id="mobile-menu">
+        <ul>
+            <li><a href="/" class="mobile-link">Home</a></li>
+            <li><a href="/accounts" class="mobile-link active">Accounts</a></li>
+            <li><a href="/tasks" class="mobile-link">Tasks</a></li>
+            <li><a href="/engagement" class="mobile-link">Engagement</a></li>
+            <li><a href="/safety" class="mobile-link">Safety</a></li>
+            <li><a href="/settings" class="mobile-link">Settings</a></li>
+            <li><a href="/login" class="mobile-link">Sign In</a></li>
+        </ul>
+    </div>
 
     <!-- Main Content Container -->
     <main class="dashboard-container">
         
         <!-- Header Section -->
-        <header class="dashboard-header reveal-item">
-            <div class="header-titles">
-                <h1 class="font-heading page-title">Account Manager</h1>
-                <p class="font-body text-muted">Connect, monitor, and configure safety thresholds for Instagram accounts.</p>
+        <header class="dashboard-header reveal">
+            <div>
+                <h1 class="page-title font-display">Account Manager</h1>
+                <p class="page-subtitle font-script">Connect, monitor, and configure safety thresholds for profiles.</p>
             </div>
-            <button class="btn-primary font-accent" id="open-add-modal-btn">Add New Account</button>
+            <button class="btn btn-primary" id="open-add-modal-btn">Add New Account</button>
         </header>
 
         <!-- Stats Bar -->
-        <section class="stats-grid reveal-item">
+        <section class="stats-grid reveal">
             <div class="stat-card">
-                <span class="stat-label font-accent">Total Connected</span>
+                <span class="stat-label">Total Connected</span>
                 <span class="stat-value font-mono" id="stat-total-accounts">0</span>
             </div>
             <div class="stat-card">
-                <span class="stat-label font-accent">Active Engine</span>
-                <span class="stat-value font-mono" id="stat-active-accounts">0</span>
+                <span class="stat-label">Active Engine</span>
+                <span class="stat-value font-mono text-amber" id="stat-active-accounts">0</span>
             </div>
             <div class="stat-card">
-                <span class="stat-label font-accent">Healthy & Safe</span>
+                <span class="stat-label">Healthy & Safe</span>
                 <span class="stat-value font-mono text-green" id="stat-safe-accounts">0</span>
             </div>
         </section>
 
-        <!-- Accounts Grid / Table -->
-        <section class="reveal-item section-margin">
-            <h2 class="font-heading section-title">Connected Instagram Accounts</h2>
+        <!-- Accounts Grid -->
+        <section class="section-margin reveal">
+            <h2 class="font-display text-2xl mb-4 text-white">Connected Instagram Profiles</h2>
             <div id="accounts-container" class="accounts-grid">
-                <!-- Dynamically populated or empty state -->
                 <div class="empty-state" id="accounts-empty-state">
                     <p class="font-body text-muted">No Instagram accounts connected yet. Click 'Add New Account' to get started.</p>
                 </div>
@@ -83,30 +101,30 @@
 
     <!-- Modal for Adding Account -->
     <div class="modal-backdrop" id="add-account-modal" style="display: none;">
-        <div class="modal-content card-glow">
-            <h3 class="font-heading modal-title">Add Instagram Account</h3>
+        <div class="modal-content card">
+            <h3 class="font-display modal-title">Add Instagram Account</h3>
             <form id="add-account-form">
                 <div class="form-group">
-                    <label class="font-accent">Username</label>
-                    <input type="text" id="acc-username" class="form-input font-body" placeholder="e.g. target_brand" required>
+                    <label>Username</label>
+                    <input type="text" id="acc-username" class="form-input" placeholder="e.g. target_brand" required>
                 </div>
                 <div class="form-group">
-                    <label class="font-accent">Password</label>
-                    <input type="password" id="acc-password" class="form-input font-body" placeholder="Optional if using cookies">
+                    <label>Password</label>
+                    <input type="password" id="acc-password" class="form-input" placeholder="Optional if using cookies">
                 </div>
                 <div class="form-row">
                     <div class="form-group">
-                        <label class="font-accent">Daily Likes Limit</label>
+                        <label>Daily Likes Limit</label>
                         <input type="number" id="acc-likes-limit" class="form-input font-mono" value="100">
                     </div>
                     <div class="form-group">
-                        <label class="font-accent">Daily Follows Limit</label>
+                        <label>Daily Follows Limit</label>
                         <input type="number" id="acc-follows-limit" class="form-input font-mono" value="50">
                     </div>
                 </div>
                 <div class="modal-actions">
-                    <button type="button" class="btn-secondary font-accent" id="close-modal-btn">Cancel</button>
-                    <button type="submit" class="btn-primary font-accent">Save Account</button>
+                    <button type="button" class="btn btn-secondary" id="close-modal-btn">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Account</button>
                 </div>
             </form>
         </div>

@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Encor - Engagement Actions & Rules</title>
+    <title>ENCOR - Engagement Engine</title>
     
-    <!-- Google Fonts (8 Fonts) -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;1,600&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@500;600&family=Poppins:wght@400;600&family=Sora:wght@400;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@400..700&family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
@@ -18,51 +21,66 @@
     <div id="page-overlay" class="page-overlay"></div>
 
     <!-- Navigation Bar -->
-    <nav class="navbar" id="navbar">
-        <div class="nav-container">
-            <a href="/" class="nav-brand font-heading">
-                ENCOR<span class="brand-accent">.</span>
-            </a>
-            
-            <div class="nav-menu" id="nav-menu">
-                <a href="/" class="nav-link font-accent">Home</a>
-                <a href="/accounts" class="nav-link font-accent">Accounts</a>
-                <a href="/tasks" class="nav-link font-accent">Tasks</a>
-                <a href="/engagement" class="nav-link active font-accent">Engagement</a>
-                <a href="/settings" class="nav-link font-accent">Settings</a>
-                <a href="/login" class="nav-link font-accent nav-login-btn">Sign In</a>
-            </div>
+    <nav id="navbar">
+        <a href="/" class="logo font-display">
+            <i class="fa-solid fa-mountain-sun text-amber-500"></i>
+            ENCOR
+        </a>
+        
+        <!-- Desktop Links -->
+        <ul class="nav-links font-body">
+            <li><a href="/">Home</a></li>
+            <li><a href="/accounts">Accounts</a></li>
+            <li><a href="/tasks">Tasks</a></li>
+            <li><a href="/engagement" class="active">Engagement</a></li>
+            <li><a href="/safety">Safety</a></li>
+            <li><a href="/settings">Settings</a></li>
+            <li><a href="/login">Sign In</a></li>
+        </ul>
 
-            <button class="burger-btn" id="burger-btn" aria-label="Toggle navigation">
-                <span class="burger-bar"></span>
-                <span class="burger-bar"></span>
-                <span class="burger-bar"></span>
-            </button>
+        <!-- Burger Menu Icon -->
+        <div class="burger-menu" id="burger">
+            <div class="burger-line line1"></div>
+            <div class="burger-line line2"></div>
+            <div class="burger-line line3"></div>
         </div>
     </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu" id="mobile-menu">
+        <ul>
+            <li><a href="/" class="mobile-link">Home</a></li>
+            <li><a href="/accounts" class="mobile-link">Accounts</a></li>
+            <li><a href="/tasks" class="mobile-link">Tasks</a></li>
+            <li><a href="/engagement" class="mobile-link active">Engagement</a></li>
+            <li><a href="/safety" class="mobile-link">Safety</a></li>
+            <li><a href="/settings" class="mobile-link">Settings</a></li>
+            <li><a href="/login" class="mobile-link">Sign In</a></li>
+        </ul>
+    </div>
 
     <!-- Main Content Container -->
     <main class="dashboard-container">
         
         <!-- Header Section -->
-        <header class="dashboard-header reveal-item">
-            <div class="header-titles">
-                <h1 class="font-heading page-title">Engagement Rules & Spintax Engine</h1>
-                <p class="font-body text-muted">Configure probability rolls, like/comment bounds, deep profile interactions, and spintax comments.</p>
+        <header class="dashboard-header reveal">
+            <div>
+                <h1 class="page-title font-display">Engagement Actions & Rules</h1>
+                <p class="page-subtitle font-script">Configure probability rolls, like/comment bounds, deep profile interactions, and spintax comments.</p>
             </div>
         </header>
 
         <!-- Settings Form Section -->
-        <section class="reveal-item section-margin">
-            <div class="settings-card card-glow">
+        <section class="section-margin reveal">
+            <div class="settings-card card">
                 <form id="engagement-rules-form">
                     
                     <!-- 1. Post Liking Rules -->
                     <div class="setting-group">
-                        <h3 class="font-heading setting-title">1. Post Liking Rules (set_do_like & set_delimit_liking)</h3>
+                        <h3 class="font-display setting-title">1. Post Liking Rules (set_do_like & set_delimit_liking)</h3>
                         <div class="setting-item">
                             <div>
-                                <h4 class="font-heading">Enable Liking (set_do_like)</h4>
+                                <h4>Enable Liking (set_do_like)</h4>
                                 <p class="font-body text-muted">Global switch to allow or suppress liking post targets.</p>
                             </div>
                             <label class="toggle-switch">
@@ -72,15 +90,15 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group">
-                                <label class="font-accent">Like Chance / Probability (%)</label>
+                                <label>Like Chance / Probability (%)</label>
                                 <input type="number" id="rule-like-percentage" class="form-input font-mono" min="0" max="100" value="100">
                             </div>
                             <div class="form-group">
-                                <label class="font-accent">Min Likes Bound (set_delimit_liking)</label>
+                                <label>Min Likes Bound (set_delimit_liking)</label>
                                 <input type="number" id="rule-like-min" class="form-input font-mono" value="5">
                             </div>
                             <div class="form-group">
-                                <label class="font-accent">Max Likes Bound (set_delimit_liking)</label>
+                                <label>Max Likes Bound (set_delimit_liking)</label>
                                 <input type="number" id="rule-like-max" class="form-input font-mono" value="10000">
                             </div>
                         </div>
@@ -88,10 +106,10 @@
 
                     <!-- 2. Commenting & Spintax Rules -->
                     <div class="setting-group">
-                        <h3 class="font-heading setting-title">2. Commenting & Spintax Engine (set_do_comment & set_comments)</h3>
+                        <h3 class="font-display setting-title">2. Commenting & Spintax Engine (set_do_comment & set_comments)</h3>
                         <div class="setting-item">
                             <div>
-                                <h4 class="font-heading">Enable Commenting (set_do_comment)</h4>
+                                <h4>Enable Commenting (set_do_comment)</h4>
                                 <p class="font-body text-muted">Global switch for post commenting routines.</p>
                             </div>
                             <label class="toggle-switch">
@@ -101,30 +119,30 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group">
-                                <label class="font-accent">Comment Chance (%)</label>
+                                <label>Comment Chance (%)</label>
                                 <input type="number" id="rule-comment-percentage" class="form-input font-mono" min="0" max="100" value="100">
                             </div>
                             <div class="form-group">
-                                <label class="font-accent">Min Comments Bound</label>
+                                <label>Min Comments Bound</label>
                                 <input type="number" id="rule-comment-min" class="form-input font-mono" value="0">
                             </div>
                             <div class="form-group">
-                                <label class="font-accent">Max Comments Bound</label>
+                                <label>Max Comments Bound</label>
                                 <input type="number" id="rule-comment-max" class="form-input font-mono" value="500">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="font-accent">Spintax Comment Templates (One expression per line)</label>
+                            <label>Spintax Comment Templates (One expression per line)</label>
                             <textarea id="rule-comments-spintax" class="form-input font-mono" rows="4" placeholder="{Awesome|Great|Love this} {pic|shot|photo}!"></textarea>
                         </div>
 
                         <!-- Live Spintax Tester -->
                         <div class="spintax-tester-box">
-                            <h4 class="font-heading text-amber">Live Spintax Tester</h4>
-                            <p class="font-body text-muted">Type a spintax string above and click test to see sample spun variations!</p>
-                            <div class="spintax-test-actions">
-                                <button type="button" class="btn-secondary font-accent" id="test-spintax-btn">Spin Sample Variations</button>
+                            <h4 class="font-display text-amber">Live Spintax Tester</h4>
+                            <p class="font-script text-lg text-gray-400">Type a spintax string above and click test to see sample spun variations!</p>
+                            <div>
+                                <button type="button" class="btn btn-secondary" id="test-spintax-btn">Spin Sample Variations</button>
                             </div>
                             <div id="spintax-preview-results" class="font-mono log-box" style="display: none;"></div>
                         </div>
@@ -132,10 +150,10 @@
 
                     <!-- 3. Comment Likes Rules -->
                     <div class="setting-group">
-                        <h3 class="font-heading setting-title">3. Comment Liking (set_do_comment_likes)</h3>
+                        <h3 class="font-display setting-title">3. Comment Liking (set_do_comment_likes)</h3>
                         <div class="setting-item">
                             <div>
-                                <h4 class="font-heading">Enable Comment Liking</h4>
+                                <h4>Enable Comment Liking</h4>
                                 <p class="font-body text-muted">Like top comments under target posts to boost profile visibility.</p>
                             </div>
                             <label class="toggle-switch">
@@ -145,11 +163,11 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group">
-                                <label class="font-accent">Comment Like Chance (%)</label>
+                                <label>Comment Like Chance (%)</label>
                                 <input type="number" id="rule-comment-likes-percentage" class="form-input font-mono" value="50">
                             </div>
                             <div class="form-group">
-                                <label class="font-accent">Max Comment Likes Per Post</label>
+                                <label>Max Comment Likes Per Post</label>
                                 <input type="number" id="rule-comment-likes-max" class="form-input font-mono" value="3">
                             </div>
                         </div>
@@ -157,10 +175,10 @@
 
                     <!-- 4. Following & Profile Depth Rules -->
                     <div class="setting-group">
-                        <h3 class="font-heading setting-title">4. Follow & Profile Deep Interaction (set_do_follow & set_user_interact)</h3>
+                        <h3 class="font-display setting-title">4. Follow & Profile Deep Interaction (set_do_follow & set_user_interact)</h3>
                         <div class="setting-item">
                             <div>
-                                <h4 class="font-heading">Enable Following (set_do_follow)</h4>
+                                <h4>Enable Following (set_do_follow)</h4>
                                 <p class="font-body text-muted">Global switch for user following during discovery.</p>
                             </div>
                             <label class="toggle-switch">
@@ -171,15 +189,15 @@
 
                         <div class="form-row">
                             <div class="form-group">
-                                <label class="font-accent">Follow Chance (%)</label>
+                                <label>Follow Chance (%)</label>
                                 <input type="number" id="rule-follow-percentage" class="form-input font-mono" value="100">
                             </div>
                             <div class="form-group">
-                                <label class="font-accent">Profile Interaction Post Count (set_user_interact)</label>
+                                <label>Profile Interaction Post Count (set_user_interact)</label>
                                 <input type="number" id="rule-user-interact-amount" class="form-input font-mono" value="3">
                             </div>
                             <div class="form-group">
-                                <label class="font-accent">Media Type Filter</label>
+                                <label>Media Type Filter</label>
                                 <select id="rule-user-interact-media" class="form-input font-body">
                                     <option value="Photo">Photo Only</option>
                                     <option value="Video">Video / Reel Only</option>
@@ -191,10 +209,10 @@
 
                     <!-- 5. Story Viewing Rules -->
                     <div class="setting-group">
-                        <h3 class="font-heading setting-title">5. Story Viewer Simulation (set_do_story)</h3>
+                        <h3 class="font-display setting-title">5. Story Viewer Simulation (set_do_story)</h3>
                         <div class="setting-item">
                             <div>
-                                <h4 class="font-heading">View Stories during Profile Visit</h4>
+                                <h4>View Stories during Profile Visit</h4>
                                 <p class="font-body text-muted">Simulate watching target user stories when visiting profiles.</p>
                             </div>
                             <label class="toggle-switch">
@@ -203,13 +221,13 @@
                             </label>
                         </div>
                         <div class="form-group">
-                            <label class="font-accent">Story View Chance (%)</label>
+                            <label>Story View Chance (%)</label>
                             <input type="number" id="rule-story-percentage" class="form-input font-mono" value="100">
                         </div>
                     </div>
 
                     <div class="settings-actions">
-                        <button type="submit" class="btn-primary font-accent">Save Engagement Rules</button>
+                        <button type="submit" class="btn btn-primary">Save Engagement Rules</button>
                         <span id="rules-status-msg" class="font-body text-green" style="display: none;">Engagement rules updated!</span>
                     </div>
 

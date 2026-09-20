@@ -3,39 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Encor - Dashboard</title>
+    <title>ENCOR - Automation Command Center</title>
     
-    <!-- Google Fonts (7+ premium fonts) -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Sora:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@400..700&family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     
-    <!-- FontAwesome -->
+    <!-- FontAwesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
 
-    <!-- Page Transition Overlay -->
-    <div class="page-transition" id="page-transition"></div>
+    <!-- Transition Overlay -->
+    <div id="page-overlay" class="page-overlay"></div>
 
-    <!-- Navigation -->
-    <nav id="navbar" class="scrolled">
-        <div class="nav-logo font-outfit">
-            <i class="fa-solid fa-mountain-sun"></i>
-            <span>ENCOR</span>
-        </div>
+    <!-- Navigation Bar -->
+    <nav id="navbar">
+        <a href="/" class="logo font-display">
+            <i class="fa-solid fa-mountain-sun text-amber-500"></i>
+            ENCOR
+        </a>
         
-        <ul class="nav-links font-sora">
-            <li><a href="/" class="nav-active">Home</a></li>
-            <li><a href="/accounts" class="page-link">Accounts</a></li>
-            <li><a href="/tasks" class="page-link">Tasks</a></li>
-            <li><a href="/settings" class="page-link">Settings</a></li>
-            <li><a href="/login" class="page-link">Login</a></li>
+        <!-- Desktop Links -->
+        <ul class="nav-links font-body">
+            <li><a href="/" class="active">Home</a></li>
+            <li><a href="/accounts">Accounts</a></li>
+            <li><a href="/tasks">Tasks</a></li>
+            <li><a href="/engagement">Engagement</a></li>
+            <li><a href="/safety">Safety</a></li>
+            <li><a href="/settings">Settings</a></li>
+            <li><a href="/login">Sign In</a></li>
         </ul>
 
+        <!-- Burger Menu Icon -->
         <div class="burger-menu" id="burger">
             <div class="burger-line line1"></div>
             <div class="burger-line line2"></div>
@@ -43,126 +46,74 @@
         </div>
     </nav>
 
-    <!-- Mobile Menu -->
+    <!-- Mobile Menu Overlay -->
     <div class="mobile-menu" id="mobile-menu">
         <ul>
-            <li><a href="/" class="mobile-link">Home</a></li>
-            <li><a href="/accounts" class="mobile-link page-link">Accounts</a></li>
-            <li><a href="/tasks" class="mobile-link page-link">Tasks</a></li>
-            <li><a href="/settings" class="mobile-link page-link">Settings</a></li>
-            <li><a href="/login" class="mobile-link page-link">Login</a></li>
+            <li><a href="/" class="mobile-link active">Home</a></li>
+            <li><a href="/accounts" class="mobile-link">Accounts</a></li>
+            <li><a href="/tasks" class="mobile-link">Tasks</a></li>
+            <li><a href="/engagement" class="mobile-link">Engagement</a></li>
+            <li><a href="/safety" class="mobile-link">Safety</a></li>
+            <li><a href="/settings" class="mobile-link">Settings</a></li>
+            <li><a href="/login" class="mobile-link">Sign In</a></li>
         </ul>
     </div>
 
-    <!-- Dashboard Content (starts immediately, no hero) -->
-    <main class="dashboard-page" id="scroll-container">
-
-        <!-- Welcome Bar -->
-        <section class="welcome-bar reveal">
-            <div class="welcome-text">
-                <h1 class="font-playfair">Welcome back</h1>
-                <p class="font-inter">Your automation command center. All systems ready.</p>
+    <!-- Dashboard Container -->
+    <main class="dashboard-container">
+        
+        <!-- Header -->
+        <header class="dashboard-header reveal">
+            <div>
+                <h1 class="page-title font-display">Command Center</h1>
+                <p class="page-subtitle font-script">Real-Time Operations & Engine Overview</p>
             </div>
-            <div class="welcome-actions">
-                <span class="engine-badge" id="engine-badge">
-                    <span class="status-dot dot-green"></span>
-                    <span class="font-space">Engine Online</span>
-                </span>
-            </div>
-        </section>
-
-        <!-- Status Cards -->
-        <section class="status-row reveal">
-            <div class="status-card">
-                <div class="status-card-icon icon-amber">
-                    <i class="fa-solid fa-server"></i>
-                </div>
-                <div class="status-card-info">
-                    <span class="status-label font-sora">Status</span>
-                    <span class="status-value font-space" id="engine-status">Idle</span>
-                </div>
-            </div>
-
-            <div class="status-card">
-                <div class="status-card-icon icon-blue">
-                    <i class="fa-solid fa-bolt"></i>
-                </div>
-                <div class="status-card-info">
-                    <span class="status-label font-sora">Running</span>
-                    <span class="status-value font-space" id="running-count">0</span>
-                </div>
-            </div>
-
-            <div class="status-card">
-                <div class="status-card-icon icon-purple">
-                    <i class="fa-solid fa-users"></i>
-                </div>
-                <div class="status-card-info">
-                    <span class="status-label font-sora">Accounts</span>
-                    <span class="status-value font-space" id="account-count">0</span>
-                </div>
-            </div>
-
-            <div class="status-card">
-                <div class="status-card-icon icon-green">
-                    <i class="fa-solid fa-check-circle"></i>
-                </div>
-                <div class="status-card-info">
-                    <span class="status-label font-sora">Completed</span>
-                    <span class="status-value font-space" id="completed-count">0</span>
-                </div>
-            </div>
-        </section>
-
-        <!-- Master Control -->
-        <section class="master-control reveal">
-            <div class="master-toggle-card">
-                <div class="master-info">
-                    <h3 class="font-outfit">Automation Engine</h3>
-                    <p class="font-inter" id="toggle-label">All systems stopped. Toggle to begin.</p>
-                </div>
+            
+            <!-- Master Start/Stop Engine Switch -->
+            <div class="flex items-center gap-3">
+                <span class="font-display text-sm tracking-wider" id="master-toggle-label">ENGINE INACTIVE</span>
                 <label class="toggle-switch">
-                    <input type="checkbox" id="master-toggle">
+                    <input type="checkbox" id="master-engine-toggle">
                     <span class="toggle-slider"></span>
                 </label>
             </div>
+        </header>
+
+        <!-- Stats Overview Row -->
+        <section class="stats-grid reveal">
+            <div class="stat-card">
+                <span class="stat-label">System Health</span>
+                <span class="stat-value font-mono text-green" id="health-status">ONLINE</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">Running Workflows</span>
+                <span class="stat-value font-mono text-amber" id="running-tasks-count">0</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">Connected Accounts</span>
+                <span class="stat-value font-mono" id="total-accounts-count">0</span>
+            </div>
         </section>
 
-        <!-- Accounts Section -->
-        <section class="accounts-section reveal">
-            <div class="section-title-row">
-                <h2 class="font-outfit">Connected Accounts</h2>
-                <span class="badge font-space" id="account-badge">0 accounts</span>
-            </div>
-
-            <div class="account-list" id="account-list">
-                <!-- Empty State -->
-                <div class="empty-state" id="empty-state">
-                    <i class="fa-solid fa-user-plus"></i>
-                    <h3 class="font-outfit">No accounts connected</h3>
-                    <p class="font-inter">Add an account from the Settings page to get started.</p>
-                    <a href="/settings" class="btn btn-primary page-link font-sora">Go to Settings</a>
+        <!-- Account Safety Status Grid -->
+        <section class="section-margin reveal">
+            <h2 class="font-display text-2xl mb-4 text-white">Instagram Account Operations</h2>
+            <div id="dashboard-accounts-grid" class="accounts-grid">
+                <div class="empty-state">
+                    <p class="font-body text-muted">No accounts connected yet. Visit Accounts to connect your Instagram profile.</p>
                 </div>
             </div>
         </section>
 
-        <!-- Activity Log -->
-        <section class="log-section reveal">
-            <div class="section-title-row">
-                <h2 class="font-outfit">Activity Log</h2>
-            </div>
-            <div class="log-container font-mono" id="log-container">
-                <p class="log-empty font-inter">No activity recorded yet. Start the engine to see live logs.</p>
-            </div>
+        <!-- Live Activity Log -->
+        <section class="section-margin reveal">
+            <h2 class="font-display text-2xl mb-4 text-white">Live Execution Telemetry</h2>
+            <pre class="log-box font-mono" id="dashboard-log-box">System initialized. Waiting for task dispatch...</pre>
         </section>
-
-        <!-- Footer -->
-        <footer>
-            <p class="font-inter">Encor v1.0.0 &mdash; Built by Rayzien</p>
-        </footer>
 
     </main>
 
+    <!-- Page JS -->
     <script src="/static/js/app.js"></script>
 </body>
 </html>

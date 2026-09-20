@@ -3,34 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Encor - Sign In</title>
+    <title>ENCOR - Sign In</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Sora:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@400..700&family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     
-    <!-- FontAwesome -->
+    <!-- FontAwesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
-<body>
+<body class="login-page">
 
-    <!-- Page Transition -->
-    <div class="page-transition" id="page-transition"></div>
+    <!-- Transition Overlay -->
+    <div id="page-overlay" class="page-overlay"></div>
 
-    <!-- Navigation -->
+    <div class="login-bg"></div>
+    <div class="login-glow login-glow-1"></div>
+    <div class="login-glow login-glow-2"></div>
+
+    <!-- Navigation Bar -->
     <nav id="navbar">
-        <div class="nav-logo font-outfit">
-            <i class="fa-solid fa-mountain-sun"></i>
-            <span>ENCOR</span>
-        </div>
-        <ul class="nav-links font-sora">
-            <li><a href="/" class="page-link">Home</a></li>
-            <li><a href="/login" class="nav-active">Login</a></li>
+        <a href="/" class="logo font-display">
+            <i class="fa-solid fa-mountain-sun text-amber-500"></i>
+            ENCOR
+        </a>
+        
+        <!-- Desktop Links -->
+        <ul class="nav-links font-body">
+            <li><a href="/">Home</a></li>
+            <li><a href="/accounts">Accounts</a></li>
+            <li><a href="/tasks">Tasks</a></li>
+            <li><a href="/engagement">Engagement</a></li>
+            <li><a href="/safety">Safety</a></li>
+            <li><a href="/settings">Settings</a></li>
+            <li><a href="/login" class="active">Sign In</a></li>
         </ul>
+
+        <!-- Burger Menu Icon -->
         <div class="burger-menu" id="burger">
             <div class="burger-line line1"></div>
             <div class="burger-line line2"></div>
@@ -38,52 +50,44 @@
         </div>
     </nav>
 
-    <!-- Mobile Menu -->
+    <!-- Mobile Menu Overlay -->
     <div class="mobile-menu" id="mobile-menu">
         <ul>
-            <li><a href="/" class="mobile-link page-link">Home</a></li>
-            <li><a href="/login" class="mobile-link">Login</a></li>
+            <li><a href="/" class="mobile-link">Home</a></li>
+            <li><a href="/accounts" class="mobile-link">Accounts</a></li>
+            <li><a href="/tasks" class="mobile-link">Tasks</a></li>
+            <li><a href="/engagement" class="mobile-link">Engagement</a></li>
+            <li><a href="/safety" class="mobile-link">Safety</a></li>
+            <li><a href="/settings" class="mobile-link">Settings</a></li>
+            <li><a href="/login" class="mobile-link active">Sign In</a></li>
         </ul>
     </div>
 
-    <!-- Login Page -->
-    <div class="login-page">
-        <!-- Background Effects -->
-        <div class="login-bg"></div>
-        <div class="login-glow login-glow-1"></div>
-        <div class="login-glow login-glow-2"></div>
+    <!-- Login Card -->
+    <div class="login-card card" id="login-card">
+        <h1 class="font-display">ENCOR SIGN IN</h1>
+        <p class="login-subtitle font-script">Access Automation Telemetry & Control Panel</p>
 
-        <!-- Login Card -->
-        <div class="login-card" id="login-card">
-            <h1 class="font-outfit">ENCOR</h1>
-            <p class="login-subtitle font-crimson">Sign in to your dashboard</p>
-            
-            <form id="login-form" autocomplete="off">
-                <div class="input-group">
-                    <label for="username" class="font-sora">Username</label>
-                    <input type="text" id="username" name="username" placeholder="Enter your username" required>
-                </div>
-                <div class="input-group">
-                    <label for="password" class="font-sora">Password</label>
-                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
-                </div>
-                
-                <div class="form-actions">
-                    <button type="submit" class="btn btn-primary font-sora" style="width: 100%;">Sign In</button>
-                </div>
-                
-                <p id="error-message" class="error-message font-inter" style="display:none;"></p>
-            </form>
-
-            <div style="margin-top: 1.5rem; text-align: center;">
-                <p class="font-inter" style="font-size: 0.78rem; color: var(--text-dim);">
-                    Don't have an account? Configure one in 
-                    <a href="/settings" class="page-link" style="color: var(--accent); text-decoration: none;">Settings</a>
-                </p>
+        <form id="login-form">
+            <div class="input-group">
+                <label>Admin Username</label>
+                <input type="text" id="username" placeholder="Enter username" required autocomplete="username">
             </div>
-        </div>
+
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" id="password" placeholder="Enter password" required autocomplete="current-password">
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary style-full w-full justify-center">Sign In to Dashboard</button>
+            </div>
+
+            <div id="error-message" class="error-message" style="display: none;"></div>
+        </form>
     </div>
-    
+
+    <script src="/static/js/app.js"></script>
     <script src="/static/js/login.js"></script>
 </body>
 </html>
