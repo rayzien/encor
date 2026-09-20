@@ -3,35 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Encor - Login</title>
+    <title>Encor - Sign In</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@400..700&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Sora:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
     
-    <!-- FontAwesome for icons -->
+    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- GSAP (login-only animations) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
-<body class="login-body">
+<body>
+
+    <!-- Page Transition -->
+    <div class="page-transition" id="page-transition"></div>
 
     <!-- Navigation -->
-    <nav id="navbar" class="scrolled">
-        <div class="font-display" style="font-size: 1.5rem; letter-spacing: 0.1em; display: flex; align-items: center; gap: 8px;">
-            <i class="fa-solid fa-mountain-sun" style="color: var(--accent);"></i>
-            ENCOR
+    <nav id="navbar">
+        <div class="nav-logo font-outfit">
+            <i class="fa-solid fa-mountain-sun"></i>
+            <span>ENCOR</span>
         </div>
-        
-        <ul class="nav-links font-body">
-            <li><a href="/">Home</a></li>
+        <ul class="nav-links font-sora">
+            <li><a href="/" class="page-link">Home</a></li>
+            <li><a href="/login" class="nav-active">Login</a></li>
         </ul>
-
         <div class="burger-menu" id="burger">
             <div class="burger-line line1"></div>
             <div class="burger-line line2"></div>
@@ -42,39 +41,46 @@
     <!-- Mobile Menu -->
     <div class="mobile-menu" id="mobile-menu">
         <ul>
-            <li><a href="/" class="mobile-link">Home</a></li>
+            <li><a href="/" class="mobile-link page-link">Home</a></li>
+            <li><a href="/login" class="mobile-link">Login</a></li>
         </ul>
     </div>
 
-    <!-- Static Parallax Background for Login (no scroll needed) -->
-    <div style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; overflow: hidden;">
-        <div class="parallax-layer layer-bg" style="position: absolute; width: 100%; height: 100%;"></div>
-        <div class="parallax-layer layer-mountains" style="position: absolute; width: 100%; height: 100%;"></div>
-        <div class="parallax-layer layer-foreground" style="position: absolute; width: 100%; height: 100%;"></div>
-        <div class="framing-overlay"></div>
-    </div>
+    <!-- Login Page -->
+    <div class="login-page">
+        <!-- Background Effects -->
+        <div class="login-bg"></div>
+        <div class="login-glow login-glow-1"></div>
+        <div class="login-glow login-glow-2"></div>
 
-    <!-- Login UI Container -->
-    <div class="login-container">
+        <!-- Login Card -->
         <div class="login-card" id="login-card">
-            <h2 class="font-display" style="font-size: 2.5rem; letter-spacing: 0.05em; margin-bottom: 0.5rem;">ENCOR</h2>
-            <p class="font-script login-subtitle" style="font-size: 1.5rem;">Sign in to begin your journey.</p>
+            <h1 class="font-outfit">ENCOR</h1>
+            <p class="login-subtitle font-crimson">Sign in to your dashboard</p>
             
-            <form id="login-form">
+            <form id="login-form" autocomplete="off">
                 <div class="input-group">
-                    <label for="username" class="font-body">Username</label>
-                    <input type="text" id="username" name="username" placeholder="Enter username" class="font-body" required>
+                    <label for="username" class="font-sora">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Enter your username" required>
                 </div>
                 <div class="input-group">
-                    <label for="password" class="font-body">Password</label>
-                    <input type="password" id="password" name="password" placeholder="••••••••" class="font-body" required>
+                    <label for="password" class="font-sora">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
                 </div>
                 
                 <div class="form-actions">
-                    <button type="submit" class="btn btn-primary font-display" style="width: 100%;">Sign In</button>
+                    <button type="submit" class="btn btn-primary font-sora" style="width: 100%;">Sign In</button>
                 </div>
-                <p id="error-message" class="error-message font-body" style="display:none;"></p>
+                
+                <p id="error-message" class="error-message font-inter" style="display:none;"></p>
             </form>
+
+            <div style="margin-top: 1.5rem; text-align: center;">
+                <p class="font-inter" style="font-size: 0.78rem; color: var(--text-dim);">
+                    Don't have an account? Configure one in 
+                    <a href="/settings" class="page-link" style="color: var(--accent); text-decoration: none;">Settings</a>
+                </p>
+            </div>
         </div>
     </div>
     

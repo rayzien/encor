@@ -1,97 +1,77 @@
-// Encor App JS — Dashboard logic + Navigation transitions
+// Encor Dashboard JS
 
 document.addEventListener('DOMContentLoaded', () => {
 
     // -----------------------------------------------
-    // 1. Navbar Scroll Effect
-    // -----------------------------------------------
-    const scrollContainer = document.getElementById('scroll-container');
-    const navbar = document.getElementById('navbar');
-
-    if (scrollContainer && navbar) {
-        scrollContainer.addEventListener('scroll', () => {
-            if (scrollContainer.scrollTop > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-            reveal();
-        });
-    }
-
-    // -----------------------------------------------
-    // 2. Burger Menu Logic
+    // 1. Burger Menu
     // -----------------------------------------------
     const burger = document.getElementById('burger');
     const mobileMenu = document.getElementById('mobile-menu');
-    let isMenuOpen = false;
-
-    function toggleMenu() {
-        isMenuOpen = !isMenuOpen;
-        if (burger) burger.classList.toggle('toggle');
-        if (mobileMenu) mobileMenu.classList.toggle('active');
-        if (scrollContainer) {
-            scrollContainer.style.overflowY = isMenuOpen ? 'hidden' : 'auto';
-        }
-    }
+    let menuOpen = false;
 
     if (burger) {
-        burger.addEventListener('click', toggleMenu);
+        burger.addEventListener('click', () => {
+            menuOpen = !menuOpen;
+            burger.classList.toggle('toggle');
+            mobileMenu.classList.toggle('active');
+        });
     }
 
-    // Close mobile menu on link click
     document.querySelectorAll('.mobile-link').forEach(link => {
         link.addEventListener('click', () => {
-            if (isMenuOpen) toggleMenu();
+            if (menuOpen) {
+                menuOpen = false;
+                burger.classList.remove('toggle');
+                mobileMenu.classList.remove('active');
+            }
         });
     });
 
     // -----------------------------------------------
-    // 3. Page Transitions (smooth fade on nav)
+    // 2. Page Transitions
     // -----------------------------------------------
-    const transitionOverlay = document.getElementById('page-transition');
-    const pageLinks = document.querySelectorAll('.page-link');
+    const overlay = document.getElementById('page-transition');
 
-    pageLinks.forEach(link => {
+    document.querySelectorAll('.page-link').forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
             const target = link.getAttribute('href');
-
-            if (transitionOverlay) {
-                transitionOverlay.classList.add('active');
-                setTimeout(() => {
-                    window.location.href = target;
-                }, 400);
+            if (overlay) {
+                overlay.classList.add('active');
+                setTimeout(() => { window.location.href = target; }, 350);
             } else {
                 window.location.href = target;
             }
         });
     });
 
-    // Fade in on page load
-    if (transitionOverlay) {
-        transitionOverlay.classList.remove('active');
-    }
+    if (overlay) overlay.classList.remove('active');
 
     // -----------------------------------------------
-    // 4. Scroll Reveal Animation
+    // 3. Reveal on scroll
     // -----------------------------------------------
     function reveal() {
-        const reveals = document.querySelectorAll('.reveal');
-        const windowHeight = window.innerHeight;
-
-        reveals.forEach(el => {
-            const elementTop = el.getBoundingClientRect().top;
-            if (elementTop < windowHeight - 100) {
+        document.querySelectorAll('.reveal').forEach(el => {
+            const top = el.getBoundingClientRect().top;
+            if (top < window.innerHeight - 60) {
                 el.classList.add('active');
             }
         });
     }
 
+    const scrollTarget = document.getElementById('scroll-container') || window;
+    if (scrollTarget.addEventListener) {
+        scrollTarget.addEventListener('scroll', reveal);
+    }
     reveal();
 
+    // Stagger reveals for a cascade effect
+    document.querySelectorAll('.reveal').forEach((el, i) => {
+        el.style.transitionDelay = (i * 0.08) + 's';
+    });
+
     // -----------------------------------------------
-    // 5. Master Toggle Logic
+    // 4. Master Toggle
     // -----------------------------------------------
     const masterToggle = document.getElementById('master-toggle');
     const toggleLabel = document.getElementById('toggle-label');
@@ -99,66 +79,58 @@ document.addEventListener('DOMContentLoaded', () => {
     if (masterToggle && toggleLabel) {
         masterToggle.addEventListener('change', () => {
             if (masterToggle.checked) {
-                toggleLabel.textContent = 'Engine running — all active accounts engaged';
+                toggleLabel.textContent = 'Engine active. Accounts will be processed.';
                 toggleLabel.style.color = '#22c55e';
             } else {
-                toggleLabel.textContent = 'All systems stopped';
-                toggleLabel.style.color = '#9ca3af';
+                toggleLabel.textContent = 'All systems stopped. Toggle to begin.';
+                toggleLabel.style.color = '';
             }
         });
     }
 
     // -----------------------------------------------
-    // 6. Account Toggle Logic
+    // 5. Account Toggles
     // -----------------------------------------------
     const accountToggles = document.querySelectorAll('.account-toggle');
-    const runningCount = document.getElementById('running-count');
-    
-    function updateRunningCount() {
-        if (!runningCount) return;
+    const runningEl = document.getElementById('running-count');
+
+    function updateRunning() {
+        if (!runningEl) return;
         let count = 0;
         accountToggles.forEach(t => { if (t.checked) count++; });
-        runningCount.textContent = count;
+        runningEl.textContent = count;
     }
 
-    accountToggles.forEach(toggle => {
-        toggle.addEventListener('change', updateRunningCount);
-    });
-
-    updateRunningCount();
+    accountToggles.forEach(t => t.addEventListener('change', updateRunning));
+    updateRunning();
 
     // -----------------------------------------------
-    // 7. Backend Health Check
+    // 6. Health Check
     // -----------------------------------------------
     checkHealth();
 });
 
-
-// Backend API
 async function checkHealth() {
+    const badgeEl = document.getElementById('engine-badge');
+    const statusEl = document.getElementById('engine-status');
     try {
-        const response = await fetch('/api/health');
-        const data = await response.json();
+        const res = await fetch('/api/health');
+        const data = await res.json();
         if (data.status === 'ok') {
-            console.log('✅ Encor Backend Online: ' + data.message);
+            console.log('[encor] backend online');
+            if (statusEl) statusEl.textContent = 'Online';
+            if (badgeEl) {
+                badgeEl.innerHTML = '<span class="status-dot dot-green"></span><span class="font-space">Engine Online</span>';
+            }
         }
-    } catch (error) {
-        console.error('❌ Connection error: Could not reach backend.');
-        const statusEl = document.getElementById('engine-status');
-        if (statusEl) {
-            statusEl.innerHTML = '<span class="status-dot dot-red"></span> Offline';
+    } catch (err) {
+        console.warn('[encor] backend unreachable');
+        if (statusEl) statusEl.textContent = 'Offline';
+        if (badgeEl) {
+            badgeEl.innerHTML = '<span class="status-dot dot-red"></span><span class="font-space">Offline</span>';
+            badgeEl.style.background = 'rgba(239,68,68,0.1)';
+            badgeEl.style.borderColor = 'rgba(239,68,68,0.2)';
+            badgeEl.style.color = '#ef4444';
         }
-    }
-}
-
-async function launchTask() {
-    try {
-        const response = await fetch('/api/automation/start', { method: 'POST' });
-        const data = await response.json();
-        if (data.status === 'ok') {
-            alert('✅ Task queued! ID: ' + data.task_id);
-        }
-    } catch (error) {
-        alert('❌ Failed to start task.');
     }
 }
