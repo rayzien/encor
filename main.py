@@ -7,6 +7,7 @@ import logging
 
 from database import engine, Base, get_db, AutomationTask
 from automation import run_automation_task
+from routers import auth
 
 # Initialize DB tables (redundant if database.py is run directly, but good practice here)
 Base.metadata.create_all(bind=engine)
@@ -15,11 +16,21 @@ logging.basicConfig(level=logging.INFO)
 
 app = FastAPI(title="Encor API")
 
+app.include_router(auth.router)
+
 # Mount the pages directory to serve static files (CSS, JS, images)
 pages_dir = os.path.join(os.path.dirname(__file__), "pages")
 
 if os.path.exists(pages_dir):
     app.mount("/static", StaticFiles(directory=pages_dir), name="static")
+
+@app.get("/login")
+async def read_login():
+    """Serve the login HTML page."""
+    login_path = os.path.join(pages_dir, "login.html")
+    if os.path.exists(login_path):
+        return FileResponse(login_path)
+    return {"message": "Login page not found."}
 
 @app.get("/")
 async def read_index():

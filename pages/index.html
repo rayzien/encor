@@ -3,60 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Encor Automation</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <title>Encor - Automation Dashboard</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@400..700&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- GSAP for Antigravity Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
-    <div class="app-container">
-        <!-- Sidebar Navigation -->
-        <nav class="sidebar">
-            <div class="logo">
-                <h2>Encor</h2>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="logo font-display" style="font-size: 1.5rem; letter-spacing: 0.1em; display: flex; align-items: center; gap: 8px;">
+            <i class="fa-solid fa-mountain-sun" style="color: var(--accent);"></i>
+            ENCOR
+        </div>
+        
+        <!-- Desktop Links -->
+        <ul class="nav-links font-body font-bold">
+            <li><a href="#dashboard">Dashboard</a></li>
+            <li><a href="#tasks">Tasks</a></li>
+            <li><a href="#settings">Settings</a></li>
+        </ul>
+
+        <!-- Burger Icon -->
+        <div class="burger-menu" id="burger">
+            <div class="burger-line line1"></div>
+            <div class="burger-line line2"></div>
+            <div class="burger-line line3"></div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+        <ul>
+            <li><a href="#dashboard" class="mobile-link">Dashboard</a></li>
+            <li><a href="#tasks" class="mobile-link">Tasks</a></li>
+            <li><a href="#settings" class="mobile-link">Settings</a></li>
+        </ul>
+    </div>
+
+    <!-- Parallax Background Layers (Firewatch Theme) -->
+    <div class="parallax-container" id="scroll-container">
+        <!-- Parallax Hero -->
+        <header class="parallax-section" style="position: relative; height: 100vh; display: flex; align-items: center; justify-content: center; transform-style: preserve-3d; z-index: -1;">
+            <div class="layer layer-bg"></div>
+            <div class="layer layer-sun"></div>
+            <div class="layer layer-mountain-3"></div>
+            <div class="layer layer-mountain-2"></div>
+            <div class="layer layer-mountain-1"></div>
+            
+            <div style="text-align: center; z-index: 10; transform: translateZ(-5px) scale(1.5);">
+                <span class="font-script" style="font-size: 3rem; color: #fde68a; display: block; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); transform: rotate(-5deg) translateY(20px);">the story of</span>
+                <h1 class="font-display" style="font-size: 8rem; line-height: 1; color: white; text-shadow: 0 10px 20px rgba(0,0,0,0.8); letter-spacing: 0.1em;">ENCOR</h1>
             </div>
-            <ul class="nav-links">
-                <li class="active"><a href="#">Dashboard</a></li>
-                <li><a href="#">Tasks</a></li>
-                <li><a href="#">Accounts</a></li>
-                <li><a href="#">Settings</a></li>
-            </ul>
-        </nav>
+
+            <div class="layer layer-foreground"></div>
+        </header>
 
         <!-- Main Content -->
-        <main class="content">
-            <header class="top-header">
-                <h1>Dashboard</h1>
-                <div class="user-profile">
-                    <div class="avatar"></div>
-                </div>
+        <main class="content" id="dashboard" style="background: var(--primary-bg); position: relative; z-index: 10; padding-top: 100px;">
+            <header class="dashboard-header gs-reveal" style="text-align: center; margin-bottom: 50px;">
+                <h2 class="font-display text-4xl mb-4" style="color: var(--accent); font-size: 2.5rem; margin-bottom: 1rem;">The Automation Journey</h2>
+                <p class="font-script text-2xl" style="color: #9ca3af; font-size: 1.5rem;">Where will your tasks take you?</p>
             </header>
-
-            <div class="dashboard-grid">
-                <!-- Status Card -->
-                <div class="card status-card">
-                    <h3>System Status</h3>
-                    <div class="status-indicator">
-                        <span class="dot online"></span>
-                        <span id="backend-status">Backend Online</span>
-                    </div>
-                </div>
-
-                <!-- Quick Actions Card -->
-                <div class="card actions-card">
-                    <h3>Quick Actions</h3>
-                    <button class="btn btn-primary" onclick="startAutomation()">Start Automation</button>
-                    <button class="btn btn-secondary">Stop All</button>
-                </div>
-            </div>
             
-            <div class="card logs-card">
-                <h3>Recent Logs</h3>
-                <div class="logs-container" id="logs-container">
-                    <p class="log-entry">Waiting for events...</p>
-                </div>
-            </div>
+            <section class="dashboard-grid">
+                <!-- Task Runner Card -->
+                <article class="glass-panel gs-reveal">
+                    <i class="fa-solid fa-rocket" style="font-size: 2rem; color: var(--accent); margin-bottom: 1rem; display: block;"></i>
+                    <h3 class="font-display" style="font-size: 1.5rem; margin-bottom: 0.5rem;">Launch Task</h3>
+                    <p class="font-body" style="color: #9ca3af; margin-bottom: 1rem; line-height: 1.6;">Venture into the unknown. Start a new automation run across your accounts and navigate through the data.</p>
+                    <button class="btn btn-primary" onclick="launchTask()">Execute</button>
+                </article>
+                
+                <!-- Accounts Card -->
+                <article class="glass-panel gs-reveal" style="transition-delay: 0.2s;">
+                    <i class="fa-solid fa-users" style="font-size: 2rem; color: var(--accent); margin-bottom: 1rem; display: block;"></i>
+                    <h3 class="font-display" style="font-size: 1.5rem; margin-bottom: 0.5rem;">Manage Accounts</h3>
+                    <p class="font-body" style="color: #9ca3af; margin-bottom: 1rem; line-height: 1.6;">The compass is your best friend. View and manage your connected automation targets seamlessly.</p>
+                    <button class="btn btn-secondary">View Accounts</button>
+                </article>
+            </section>
         </main>
     </div>
-    
-    <script src="/static/app.js"></script>
+
+    <!-- Custom JS -->
+    <script src="/static/js/app.js"></script>
 </body>
 </html>

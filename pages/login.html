@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encor - Login</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@400..700&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- GSAP for Antigravity Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="login-body">
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="logo font-display" style="font-size: 1.5rem; letter-spacing: 0.1em; display: flex; align-items: center; gap: 8px;">
+            <i class="fa-solid fa-mountain-sun" style="color: var(--accent);"></i>
+            ENCOR
+        </div>
+        
+        <!-- Desktop Links -->
+        <ul class="nav-links font-body font-bold">
+            <li><a href="/">Home</a></li>
+        </ul>
+
+        <!-- Burger Icon -->
+        <div class="burger-menu" id="burger">
+            <div class="burger-line line1"></div>
+            <div class="burger-line line2"></div>
+            <div class="burger-line line3"></div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+        <ul>
+            <li><a href="/" class="mobile-link">Home</a></li>
+        </ul>
+    </div>
+
+    <!-- Parallax Background Layers (Firewatch Theme) -->
+    <div class="parallax-container" id="scroll-container">
+        <div class="layer layer-bg"></div>
+        <div class="layer layer-sun"></div>
+        <div class="layer layer-mountain-3"></div>
+        <div class="layer layer-mountain-2"></div>
+        <div class="layer layer-mountain-1"></div>
+        <div class="layer layer-foreground"></div>
+        
+        <!-- Login UI Container -->
+        <div class="login-container">
+            <div class="glass-panel login-card gs-reveal" style="background: rgba(24, 24, 27, 0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);">
+                <div class="logo">
+                    <h2 class="font-display" style="font-size: 2.5rem; letter-spacing: 0.05em;">ENCOR</h2>
+                </div>
+                <p class="font-script login-subtitle" style="font-size: 1.5rem; color: #9ca3af;">Sign in to begin your journey.</p>
+                
+                <form id="login-form">
+                    <div class="input-group">
+                        <label for="username" class="font-body">Username</label>
+                        <input type="text" id="username" name="username" placeholder="Enter username" class="font-body" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="password" class="font-body">Password</label>
+                        <input type="password" id="password" name="password" placeholder="••••••••" class="font-body" required>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary gs-btn font-display" style="width: 100%;">Sign In</button>
+                    </div>
+                    <p id="error-message" class="error-message font-body" style="display:none;"></p>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Custom JS -->
+    <script src="/static/js/login.js"></script>
+    <script>
+        // Additional UI logic for the navbar on the login page
+        document.addEventListener('DOMContentLoaded', () => {
+            const burger = document.getElementById('burger');
+            const mobileMenu = document.getElementById('mobile-menu');
+            let isMenuOpen = false;
+
+            if (burger && mobileMenu) {
+                burger.addEventListener('click', () => {
+                    isMenuOpen = !isMenuOpen;
+                    burger.classList.toggle('toggle');
+                    mobileMenu.classList.toggle('active');
+                });
+            }
+        });
+    </script>
+</body>
+</html>
